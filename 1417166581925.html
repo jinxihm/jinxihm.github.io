@@ -1,0 +1,179 @@
+<!DOCTYPE html><html><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="description" content="a test space">
+<meta name="author" content="fangliang">
+<title>My blog</title>
+
+<link href="resources/bootstrap331dist/css/bootstrap.css" rel="stylesheet">
+<link href="resources/octicons/octicons.css" rel="stylesheet">
+<!-- icons -->
+<link href="resources/css/wowblog.css" rel="stylesheet">
+<!-- icons -->
+
+<!-- make IE8 support HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+<script src="resources/jquery/jquery-1.11.1.min.js"></script>
+<script src="resources/bootstrap331dist/js/bootstrap.min.js"></script>
+
+<script src="resources/js/wowblog.js"></script>
+
+<!-- Local JavaScript -->
+
+
+
+<style>
+
+</style>
+
+<script>
+
+var blogInfo ={};
+
+</script>
+</head>
+<body style="background-color: #F5F5D5">
+
+  <nav class="navbar navbar-default navbar-fixed-top" role="navigation" style="background-color: white">
+    <div class="container">
+      <div class="row" style="margin-top: 12px">
+
+        <div class="col-md-1"></div>
+
+        <div class="col-md-8">
+
+
+            <span class="glyphicon glyphicon-home navSpan" style="color:#0084B4"></span>
+            
+            <span class="glyphicon glyphicon-list navSpan" aria-hidden="true"></span>
+            <span id="edit" class="glyphicon glyphicon-pencil navSpan" aria-hidden="true"></span>
+            <span id="create" class="glyphicon glyphicon-plus navSpan" aria-hidden="true"></span>
+            <span id="saveCancelGrp" style="visibility:visible">
+            <button id="save" type="button" class="btn btn-success " style="padding-bottom:5px;margin-bottom:12px">
+              <span class="glyphicon glyphicon-ok"></span> &nbsp;保&nbsp;存&nbsp;
+            </button>            
+            <button id="cancel" type="button" class="btn btn-link " style="padding-bottom:5px;margin-bottom:8px">
+              <span class="glyphicon glyphicon-remove"></span> 取消
+            </button>
+            </span>
+
+            
+            
+            <!-- <span class="mega-octicon octicon-bookmark" style="font-size: 32px;"></span>
+            <span class=" mega-octicon notes" style="font-size: 32px;"></span>
+            <span class=" mega-octicon octicon-quote" style="font-size: 32px;"></span>
+            <span>
+            <span id="save" class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+            <span id="cancel" class="glyphicon glyphicon-remove" aria-hidden="true"></span> 
+            </span> -->
+
+          
+
+        </div>
+
+        <div class="col-md-3">
+        </div>
+
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+
+    <div class="row">
+      <div class="col-md-12" style="height: 70px">&nbsp;</div>
+    </div>
+    <div class="row">
+      <div class="col-md-1"></div>
+      <div class="col-md-7">
+
+        <div class="blog ">
+          <div class="blog-title mybgcolor">
+            <h3 id="blogTitle" style="padding-top: 2px">javascript 闭包</h3>
+          </div>
+
+          <div class="mydivider"></div>
+          <!-- 分割线 -->
+
+          <div id="blogContent" class="blog-content" style="padding-top: 2px;">（1）"云冲印"为了后续的服务，会保存用户的密码，这样很不安全。
+            （2）Google不得不部署密码登录，而我们知道，单纯的密码登录并不安全。
+            （3）"云冲印"拥有了获取用户储存在Google所有资料的权力，用户没法限制"云冲印"获得授权的范围和有效期。
+            （4）用户只有修改密码，才能收回赋予"云冲印"的权力。但是这样做，会使得其他所有获得用户授权的第三方应用程序全部失效。
+            （5）只要有一个第三方应用程序被破解，就会导致用户密码泄漏，以及所有被密码保护的数据泄漏。</div>
+
+        </div>
+        <!-- end  blog -->
+
+
+
+      </div>
+      <div class="col-md-4">
+
+        <div>
+          <h2>&nbsp;</h2>
+        </div>
+
+        
+
+
+        <div class="mygap" id="editorToolbar" style="">
+          <span class="glyphicon glyphicon-font" title="字体"></span>
+          <span class="glyphicon glyphicon-bold" title="加粗"></span>
+          <span class="glyphicon glyphicon-italic" title="斜体"></span>
+          <span class="glyphicon glyphicon-align-left" title="左对齐"></span>
+          <span class="glyphicon glyphicon-align-center" title="居中"></span>
+          <span class="glyphicon glyphicon-align-right" title="右对齐"></span>
+          <span class="glyphicon glyphicon-align-justify" title="两端对齐"></span>
+          <span class="glyphicon glyphicon-link" title="超链接"></span>
+          <span class="glyphicon glyphicon-picture" title="图片"></span>
+          <span class="glyphicon glyphicon-film" title="视频"></span>
+
+
+        </div>
+
+
+
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <div id="asideBtns">
+              <span id="contentNavBtn" class="sel">书签</span>
+              <span id="contentNoteBtn">笔记</span>
+              <span id="contentRefBtn">参考</span>
+            </div>
+            <div id="asidContent">
+              <div id="contentNavArea">
+              
+                <ul class="list-group">
+                  <li class="list-group-item">
+                    <!--  <span class="badge">14</span> -->
+                    <a href="#" class=" ">Cras justo odio</a>
+                  </li>
+                   <li class="list-group-item">
+                    <a href="#" class=" ">Cras justo odio</a>
+                  </li>
+                   <li class="list-group-item">
+                    <a href="#" class=" ">Cras justo odio</a>
+                  </li>
+                </ul>
+              </div>
+              <div id="contentNoteArea" style="display:none;min-height:100px" contenteditable="true">blogNote</div>
+              <div id="contentRefArea" style="display:none;min-height:100px">blogRef</div>
+            </div>
+
+
+
+
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+
+
+</body></html>
