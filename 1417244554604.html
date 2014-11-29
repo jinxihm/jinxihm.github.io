@@ -1,0 +1,157 @@
+<!DOCTYPE html><html><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="description" content="a test space">
+<meta name="author" content="fangliang">
+<title>My blog</title>
+
+<link href="resources/bootstrap331dist/css/bootstrap.css" rel="stylesheet">
+<link href="resources/octicons/octicons.css" rel="stylesheet">
+<link href="resources/foundation-icons/foundation-icons.css" rel="stylesheet">
+<!-- icons -->
+<link href="resources/css/wowblog.css" rel="stylesheet">
+<!-- icons -->
+
+<!-- make IE8 support HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+<script src="resources/jquery/jquery-1.11.1.min.js"></script>
+<script src="resources/bootstrap331dist/js/bootstrap.min.js"></script>
+
+<script src="resources/js/githubapi.js"></script>
+<script src="resources/js/wowblog.js"></script>
+
+<!-- Local JavaScript -->
+
+
+
+<style>
+</style>
+
+<script>
+  var blogInfo = {};
+</script>
+</head>
+<body>
+
+  <div class="navbar navbar-default navbar-fixed-top" style="background-color: white; padding-top: 12px; height: 48px;">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8">
+        
+          <a href="index.html" target="_blank">
+            <span class="glyphicon glyphicon-home navSpan" style="color: #0084B4"></span>
+          </a>
+          
+          <span class="glyphicon glyphicon-list navSpan"></span>        
+            
+          <a href="newblog.html" target="_blank">
+            <span id="create" class="glyphicon glyphicon-plus navSpan"></span>
+          </a>
+          <span id="edit" class="glyphicon glyphicon-pencil navSpan" aria-hidden="true" style="display: none; "></span>          
+          
+          <button id="cancel" type="button" class="btn btn-link " style="padding-bottom: 5px; margin-bottom: 8px; display: none; ">
+            <span class="glyphicon glyphicon-remove"></span>
+            <span>取消</span>
+          </button>
+          
+          <button id="save" type="button" class="btn btn-success " style="padding-bottom: 5px; margin-bottom: 12px; display: none; ">
+            <span class="glyphicon glyphicon-ok"></span>
+            <span>&nbsp;保&nbsp;存&nbsp;</span>
+          </button>
+          <span id="info" style="color:#5BC0DE">正在保存,请稍等...</span>
+          <button class="btn btn-success " style="padding-bottom: 5px; margin-bottom: 12px;visibility:hidden">&nbsp;</button>
+          
+          
+          
+        </div>
+
+        <div class="col-md-4">
+          <div id="toobBar" style="position: absolute; top: 78px; display: none; ">
+          <div class="panel panel-default">
+            <div class="panel-body" id="editorToolbar">
+              <span class="fi-bold" title="加粗"></span>
+              <span class="fi-italic" title="斜体"></span>
+              <span class="fi-underline" title="下划线"></span>
+              <span class="fi-strike" title="删除线"></span>
+              <span style="padding-right: 3px"></span>
+              <span class="fi-align-left" title="左对齐"></span>
+              <span class="fi-align-center" title="居中"></span>
+              <span class="fi-align-right" title="右对齐"></span>
+              <span class="fi-align-justify" title="两端对齐"></span>
+              <span style="padding-right: 3px"></span>
+              <span class="fi-list-numbered" title="有序列表"></span>
+              <span class="fi-list-bullet" title="无序列表"></span>
+              <span class="fi-indent-more" title="缩进"></span>
+              <span class="fi-indent-less" title="后退缩进"></span>
+              <span style="padding-right: 3px"></span>
+              <span class="fi-link" title="链接"></span>
+              <span class="fi-unlink" title="去链接"></span>
+              <span class="fi-quote" title="引用"></span>
+              <span class="fi-photo" title="图片"></span>
+            </div>
+          </div>
+        </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+  <div class="container">
+
+
+
+    <div class="row">
+      <div class="col-md-8">
+        <div class="blog">
+
+          <div id="blogTitle" style="font-size: 24px; min-height: 24px; " contenteditable="false">啊</div>
+          <div class="mydivider"></div>
+          <!-- 分割线 -->
+          <div id="blogContent" class="" style="padding-top: 2px; min-height: 300px; " contenteditable="false"><div>百家对话：机器人会控制人类吗？</div><div><br></div><div>埃及抗议引发冲突 致2人死亡</div><div><br></div><div>韩小朋友摔储蓄罐接济穷人</div><div><br></div><div>科特迪瓦扣押两艘中国渔船</div><div><br></div><div>日本公布内阁收入 安倍居首</div><div>进账17604万日元(约人民币915万)，从第2位升至首位。</div><div>热门1分钟前</div><div><br></div><div>威廉王子将于明年3月访上海 凯特不随行</div><div>威廉王子将于明年3月访上海时隔29年，英国王室重要成员将再度访问大陆。台媒报道，英国驻上海总领...</div><div>热门5分钟前</div><div><br></div><div>质疑任总房价说 李扬:出手好时机未到</div><div>谈股市：不要盲目跟风中国股市是政策市场。</div><div>热门9分钟前</div><div><br></div><div>习近平:上山下乡对我锻炼很大</div><div>1969年习近平曾从北京到陕北的延川县插队落户。</div><div>热门13分钟前</div><div>“二微”相争 新浪求生</div><div>微博和微信这两个国内最大的社交工具大打出手。 11月25日，微信朋友圈开始转发“新浪微博要对在...</div><div>推荐17分钟前</div><div>微信翻译为何选择网易有道？</div><div>前不久，微信牵手网易有道，双方进行英文信息即时翻译的合作，网易有道作为合作伙伴，将为微信用户提...</div><div>推荐21分钟前</div><div><br></div><div>飞机撞高压线坠毁 1名飞行员死亡</div><div>飞机撞高压线坠毁 1名飞行员死亡</div><div>热门25分钟前</div><div><br></div><div>日前首相冒雨骂安倍 将其比作希特勒</div><div>演讲1小时几乎无人驻足倾听,仅2人上前握手。</div><div>热门29分钟前</div><div><br></div><div>金正恩妹妹进入朝高层核心圈</div><div>金与正行使如姑姑金敬姬当年在金正日身边一样的角色。</div><div>热门1小时前</div><div><br></div><div>媒体揭秘文强老上司朱明国：今日上午在机场被带走</div><div>也因此，此前朱明国曾“消失3个月”的说法再次被翻出。那是今年6月的事了，当时的朱明国曾被媒体观...</div><div>热门1小时前</div><div><br></div><div>微博封杀微信推广，没钱也任性</div><div>微博有充足的理由视微信为敌人，不管从情理上还是从商业逻辑上都是如此。当初微信起来的时候，根本不...</div><div>推荐1小时前</div><div><br></div><div>互联网江湖战，拼的是什么？</div><div>当我们谈论中国互联网公司的竞争力时，我们在谈论什么？所有竞争的问题，在土妖看来，都将归结于技术...</div><div>推荐1小时前</div><div><br></div><div>再谈股市赌场论 吴敬琏:不要轻信牛市</div><div>在所谓牛市的感染下，可能会形成羊群效应。</div><div>热门1小时前</div><div><br></div><div>索尼电子纸手表明年5月出货</div><div>索尼并不局限于手表，也在开发基于电子墨水的领带。</div><div>热门1小时前</div><div><br></div><div>北方迎大风降温 局地降温12℃</div><div>西北、内蒙大部迎来4-6级偏北风，普遍降温6-10℃。</div><div>热门1小时前</div><div><br></div><div>俄军舰队远赴英国家门口演习</div><div>28日进入英吉利海峡进行演习，北约密切关注。</div><div>热门1小时前</div><div><br></div><div>大神回应入股传闻 阿里腾讯会是谁?</div><div>这些天来，小米雷军估计很难睡好觉。魅族MX 4 Pro的进击还余澜未了，又传出阿里或者腾讯将入...</div><div>推荐1小时前</div><div>求职，别神化互联网公司</div><div>阿里巴巴、百度、腾讯……提起互联网公司，刚刚从象牙塔里走出来的90后毕业生几乎个个都能如数家...</div><div>推荐1小时前</div></div>
+        </div>
+        <!-- end  blog -->
+
+
+
+      </div>
+      <div class="col-md-4">
+
+        <div class="panel panel-default" style="margin-top:55px;">
+          <div class="panel-body">
+            <div id="asideBtns">
+              <span id="contentNavBtn" class="sel">书签</span>
+              <span id="contentNoteBtn">笔记</span>
+              <span id="contentRefBtn">参考</span>
+            </div>
+            <div id="asidContent">
+              <div id="contentNavArea">
+
+                <ul class="list-group">
+                  <li class="list-group-item">
+                    <!--  <span class="badge">14</span> --> <a href="#" class=" ">Cras justo odio</a>
+                  </li>
+                </ul>
+              </div>
+              <div id="contentNoteArea" style="display: none; min-height: 100px" contenteditable="true">blogNote</div>
+              <div id="contentRefArea" style="display: none; min-height: 100px">blogRef</div>
+            </div>
+
+
+
+
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+
+
+</body></html>
