@@ -1,0 +1,157 @@
+<!DOCTYPE html><html><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="description" content="a test space">
+<meta name="author" content="fangliang">
+<title>My blog</title>
+
+<link href="resources/bootstrap331dist/css/bootstrap.css" rel="stylesheet">
+<link href="resources/octicons/octicons.css" rel="stylesheet">
+<link href="resources/foundation-icons/foundation-icons.css" rel="stylesheet">
+<!-- icons -->
+<link href="resources/css/wowblog.css" rel="stylesheet">
+<!-- icons -->
+
+<!-- make IE8 support HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+<script src="resources/jquery/jquery-1.11.1.min.js"></script>
+<script src="resources/bootstrap331dist/js/bootstrap.min.js"></script>
+
+<script src="resources/js/githubapi.js"></script>
+<script src="resources/js/wowblog.js"></script>
+
+<!-- Local JavaScript -->
+
+
+
+<style>
+</style>
+
+<script>
+  var blogInfo = {};
+</script>
+</head>
+<body>
+
+  <div class="navbar navbar-default navbar-fixed-top" style="background-color: white; padding-top: 12px; height: 48px;">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8">
+        
+          <a href="index.html" target="_blank">
+            <span class="glyphicon glyphicon-home navSpan" style="color: #0084B4"></span>
+          </a>
+          
+          <span class="glyphicon glyphicon-list navSpan"></span>        
+            
+          <a href="newblog.html" target="_blank">
+            <span id="create" class="glyphicon glyphicon-plus navSpan"></span>
+          </a>
+          <span id="edit" class="glyphicon glyphicon-pencil navSpan" aria-hidden="true" style="display: none; "></span>          
+          
+          <button id="cancel" type="button" class="btn btn-link " style="padding-bottom: 5px; margin-bottom: 8px; display: none; ">
+            <span class="glyphicon glyphicon-remove"></span>
+            <span>取消</span>
+          </button>
+          
+          <button id="save" type="button" class="btn btn-success " style="padding-bottom: 5px; margin-bottom: 12px; display: none; ">
+            <span class="glyphicon glyphicon-ok"></span>
+            <span>&nbsp;保&nbsp;存&nbsp;</span>
+          </button>
+          <span id="info" style="color:#5BC0DE">正在保存,请稍等...</span>
+          <button class="btn btn-success " style="padding-bottom: 5px; margin-bottom: 12px;visibility:hidden">&nbsp;</button>
+          
+          
+          
+        </div>
+
+        <div class="col-md-4">
+          <div id="toobBar" style="position: absolute; top: 78px; display: none; ">
+          <div class="panel panel-default">
+            <div class="panel-body" id="editorToolbar">
+              <span class="fi-bold" title="加粗"></span>
+              <span class="fi-italic" title="斜体"></span>
+              <span class="fi-underline" title="下划线"></span>
+              <span class="fi-strike" title="删除线"></span>
+              <span style="padding-right: 3px"></span>
+              <span class="fi-align-left" title="左对齐"></span>
+              <span class="fi-align-center" title="居中"></span>
+              <span class="fi-align-right" title="右对齐"></span>
+              <span class="fi-align-justify" title="两端对齐"></span>
+              <span style="padding-right: 3px"></span>
+              <span class="fi-list-numbered" title="有序列表"></span>
+              <span class="fi-list-bullet" title="无序列表"></span>
+              <span class="fi-indent-more" title="缩进"></span>
+              <span class="fi-indent-less" title="后退缩进"></span>
+              <span style="padding-right: 3px"></span>
+              <span class="fi-link" title="链接"></span>
+              <span class="fi-unlink" title="去链接"></span>
+              <span class="fi-quote" title="引用"></span>
+              <span class="fi-photo" title="图片"></span>
+            </div>
+          </div>
+        </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+  <div class="container">
+
+
+
+    <div class="row">
+      <div class="col-md-8">
+        <div class="blog">
+
+          <div id="blogTitle" style="font-size: 24px; min-height: 24px; " contenteditable="false">你好</div>
+          <div class="mydivider"></div>
+          <!-- 分割线 -->
+          <div id="blogContent" class="" style="padding-top: 2px; min-height: 300px; " contenteditable="false">合肥</div>
+        </div>
+        <!-- end  blog -->
+
+
+
+      </div>
+      <div class="col-md-4">
+
+        <div class="panel panel-default" style="margin-top:55px;">
+          <div class="panel-body">
+            <div id="asideBtns">
+              <span id="contentNavBtn" class="sel">书签</span>
+              <span id="contentNoteBtn">笔记</span>
+              <span id="contentRefBtn">参考</span>
+            </div>
+            <div id="asidContent">
+              <div id="contentNavArea">
+
+                <ul class="list-group">
+                  <li class="list-group-item">
+                    <!--  <span class="badge">14</span> --> <a href="#" class=" ">Cras justo odio</a>
+                  </li>
+                </ul>
+              </div>
+              <div id="contentNoteArea" style="display: none; min-height: 100px" contenteditable="true">blogNote</div>
+              <div id="contentRefArea" style="display: none; min-height: 100px">blogRef</div>
+            </div>
+
+
+
+
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+
+
+</body></html>
