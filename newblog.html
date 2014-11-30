@@ -113,8 +113,8 @@
         <div class="blog">
 
           <div id="blogTitle" style="font-size: 24px;"></div>
-          <div class="mydivider"></div>
-          <!-- 分割线 -->
+          <div class="mydivider"></div><!-- 分割线 -->
+          
           <div id="blogContent" class="" style="padding-top: 2px;min-height:300px"></div>
         </div>
         <!-- end  blog -->
@@ -128,6 +128,7 @@
           <div class="panel-body">
             <div id="asideBtns">
               <span id="contentNavBtn" class="sel">书签</span>
+              <span id="contentCategoryBtn">分类</span>
               <span id="contentNoteBtn">笔记</span>
               <span id="contentRefBtn">参考</span>
             </div>
@@ -139,6 +140,20 @@
                     <!--  <span class="badge">14</span> --> <a href="#" class=" ">Cras justo odio</a>
                   </li>
                 </ul>
+              </div>
+              <div id="contentCategoryArea" style="display: none; min-height: 100px">
+              	<div class="dropdown">
+              	  <h5 class="dropdown-toggle"  id="categoryDropMenu" data-toggle="dropdown" > 
+              	  请选择分类
+				  </h5>
+				  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+				  	
+				    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">javascript</a></li>
+				    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">js framework</a></li>
+				    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">html css</a></li>
+				    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">web safety</a></li>
+				  </ul>
+				</div>
               </div>
               <div id="contentNoteArea" style="display: none; min-height: 100px" contentEditable=true>blogNote</div>
               <div id="contentRefArea" style="display: none; min-height: 100px">blogRef</div>
