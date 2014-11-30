@@ -1,5 +1,11 @@
 $(document).ready(function() {
 
+	var category = {};
+	var url = location.host + "/category.json";
+	$.getJSON(url, function(data){
+		category = data; 
+	});
+
 	function isNewBlog(){
 		return (location.href.indexOf('newblog')>-1);
 	}
