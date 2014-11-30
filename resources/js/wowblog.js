@@ -83,7 +83,7 @@ $(document).ready(function() {
 			return;
 		}
 		
-		if(!wowblog.pageInfo.sha){
+		if(!isNewPage() && !wowblog.pageInfo.sha){
 			alert('正在获取文件信息，请重新保存');
 			return;
 		}
