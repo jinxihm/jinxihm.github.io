@@ -1,7 +1,7 @@
 $(document).ready(function() {
 
 	var category = {};
-	var url = location.host + "/category.json";
+	var url = "category.json";
 	$.getJSON(url, function(data){
 		category = data; 
 	});
