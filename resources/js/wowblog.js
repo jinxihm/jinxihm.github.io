@@ -109,7 +109,7 @@ $(document).ready(function() {
 			// 更改地址栏
 			var stateObject = {};
 			var title = "Wow Title";
-			var newUrl = blogInfo.path;
+			var newUrl = wowblog.pageInfo.path;
 			history.pushState(stateObject,title,newUrl);
 			
 			window.addEventListener('popstate', function(event) {
@@ -117,7 +117,7 @@ $(document).ready(function() {
 				//alert(event);
 				});
 			
-			
+			document.title = $('#blogTitle').text();
 			$('#info').html("已保存");
 			$('#edit').show();
 		}
