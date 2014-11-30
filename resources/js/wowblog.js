@@ -5,7 +5,7 @@ $(document).ready(function() {
 	wowblog.pageInfo = {};
 	// 获取目录信息
 	(function(){
-		$.getJSON("category.json", function(data){
+		$.getJSON("/category.json", function(data){
 			wowblog.category = data; 
 		});
 	})();
