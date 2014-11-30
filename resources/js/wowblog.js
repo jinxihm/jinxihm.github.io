@@ -1,10 +1,12 @@
 $(document).ready(function() {
 
-	var category = {};
-	var url = "category.json";
-	$.getJSON(url, function(data){
-		category = data; 
-	});
+	var getCategory = function(){
+		$.getJSON("category.json", function(data){
+			// 创建global variable
+			window.category = data; 
+		});
+	}
+	getCategory();
 
 	function isNewBlog(){
 		return (location.href.indexOf('newblog')>-1);
