@@ -90,6 +90,8 @@ $(document).ready(function() {
 		$('#save').hide();
 		$('#cancel').hide();
 		
+		document.title = $('#blogTitle').text();
+		
 		if(isNewPage()){
 			path = "/"  + (new Date()).getTime() + ".html";
 		}
@@ -117,7 +119,7 @@ $(document).ready(function() {
 				//alert(event);
 				});
 			
-			document.title = $('#blogTitle').text();
+			
 			$('#info').html("已保存");
 			$('#edit').show();
 		}
