@@ -91,7 +91,7 @@ $(document).ready(function() {
 		$('#cancel').hide();
 		
 		if(isNewPage()){
-			path = "/" + $('#categoryDropMenu').text() + "/" + (new Date()).getTime() + ".html";
+			path = "/"  + (new Date()).getTime() + ".html";
 		}
 				
 		// 整个html文档,编码成base64.
