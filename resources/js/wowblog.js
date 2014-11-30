@@ -83,6 +83,11 @@ $(document).ready(function() {
 			return;
 		}
 		
+		if(!wowblog.pageInfo.sha){
+			alert('正在获取文件信息，请重新保存');
+			return;
+		}
+		
 		// 修改页面元素状态
 		$('#blogTitle').attr('contentEditable',false).css('background-color','transparent');
 		$('#blogContent').attr('contentEditable',false).css('background-color','transparent');
@@ -99,7 +104,7 @@ $(document).ready(function() {
 		// 整个html文档,编码成base64.
 		var content = "<!DOCTYPE html><html>" + $('html').html() + "</html>";
 		
-		saveFile(path, content, blogInfo.sha, saveFileSucceed, saveFileFailed);
+		saveFile(path, content, wowblog.pageInfo.sha, saveFileSucceed, saveFileFailed);
 		
 		$('#info').html("正在保存,请稍等...");
 		
