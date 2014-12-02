@@ -1,0 +1,171 @@
+<!DOCTYPE html><html><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="description" content="a test space">
+<meta name="author" content="fangliang">
+<title>发现 • 新食材</title>
+
+<link href="/resources/bootstrap331dist/css/bootstrap.css" rel="stylesheet">
+<link href="/resources/octicons/octicons.css" rel="stylesheet">
+<link href="/resources/foundation-icons/foundation-icons.css" rel="stylesheet">
+<!-- icons -->
+<link href="/resources/css/wowblog.css" rel="stylesheet">
+<!-- icons -->
+
+<!-- make IE8 support HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+<script src="/resources/jquery/jquery-1.11.1.min.js"></script>
+<script src="/resources/bootstrap331dist/js/bootstrap.min.js"></script>
+
+<script src="/resources/js/githubapi.js"></script>
+<script src="/resources/js/wowblog.js"></script>
+
+<!-- Local JavaScript -->
+
+
+
+<style>
+</style>
+
+<script>
+  var blogInfo = {};
+</script>
+</head>
+<body>
+
+  <div class="navbar navbar-default navbar-fixed-top" style="background-color: white; padding-top: 12px; height: 48px;">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8">
+        
+          <a href="/index.html" target="_blank">
+            <span class="glyphicon glyphicon-home navSpan" style="color: #0084B4"></span>
+          </a>
+          
+          <span class="glyphicon glyphicon-list navSpan"></span>        
+            
+          <a href="/newblog.html" target="_blank">
+            <span id="create" class="glyphicon glyphicon-plus navSpan"></span>
+          </a>
+          <span id="edit" class="glyphicon glyphicon-pencil navSpan" aria-hidden="true" style="display: none;"></span>          
+          
+          <button id="cancel" type="button" class="btn btn-link " style="padding-bottom: 5px; margin-bottom: 8px; display: none;">
+            <span class="glyphicon glyphicon-remove"></span>
+            <span>取消</span>
+          </button>
+          
+          <button id="save" type="button" class="btn btn-success " style="padding-bottom: 5px; margin-bottom: 12px; display: none;">
+            <span class="glyphicon glyphicon-ok"></span>
+            <span>&nbsp;保&nbsp;存&nbsp;</span>
+          </button>
+          <span id="info" style="color:#5BC0DE"></span>
+          <button class="btn btn-success " style="padding-bottom: 5px; margin-bottom: 12px;visibility:hidden">&nbsp;</button>
+          
+          
+          
+        </div>
+
+        <div class="col-md-4" style="display:none">
+          <div id="toobBar" style="position: absolute; top: 78px; display: none;">
+          <div class="panel panel-default">
+            <div class="panel-body" id="editorToolbar">
+              <span class="fi-bold" title="加粗"></span>
+              <span class="fi-italic" title="斜体"></span>
+              <span class="fi-underline" title="下划线"></span>
+              <span class="fi-strike" title="删除线"></span>
+              <span style="padding-right: 3px"></span>
+              <span class="fi-align-left" title="左对齐"></span>
+              <span class="fi-align-center" title="居中"></span>
+              <span class="fi-align-right" title="右对齐"></span>
+              <span class="fi-align-justify" title="两端对齐"></span>
+              <span style="padding-right: 3px"></span>
+              <span class="fi-list-numbered" title="有序列表"></span>
+              <span class="fi-list-bullet" title="无序列表"></span>
+              <span class="fi-indent-more" title="缩进"></span>
+              <span class="fi-indent-less" title="后退缩进"></span>
+              <span style="padding-right: 3px"></span>
+              <span class="fi-link" title="链接"></span>
+              <span class="fi-unlink" title="去链接"></span>
+              <span class="fi-quote" title="引用"></span>
+              <span class="fi-photo" title="图片"></span>
+            </div>
+          </div>
+        </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+  <div class="container">
+
+
+
+    <div class="row">
+      <div class="col-md-8">
+        <div class="blog">
+
+          <div id="blogTitle" style="font-size: 24px; min-height: 24px; background-color: transparent;" contenteditable="false"><a href="http://www.meishichina.com/YuanLiao/" class="on" target="_blank" style="color: rgb(51, 51, 51); font-family: 'Microsoft YaHei', tahoma, arial, serif; line-height: 30px; display: inline-block; font-size: 18px; margin-right: 20px; padding-bottom: 5px; outline: 0px; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(186, 32, 32); background-color: rgb(255, 255, 255);">发现 • 新食材</a></div>
+          <div class="mydivider"></div><!-- 分割线 -->
+          
+          <div id="blogContent" class="" style="padding-top: 2px; min-height: 300px; background-color: transparent;" contenteditable="false"><div class="ui_title" style="margin: 0px 0px 15px; padding: 0px; height: 35px; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(232, 232, 232); position: relative; clear: both; color: rgb(0, 0, 0); font-family: 'Microsoft YaHei', tahoma, arial, serif; font-size: 12px; line-height: 19.2000007629395px;"><div class="ui_title_wrap clear" style="margin: 0px; padding: 0px; zoom: 1; line-height: 30px; font-size: 0px;"><a href="http://www.meishichina.com/YuanLiao/" class="on" target="_blank" style="color: rgb(51, 51, 51); float: left; display: inline-block; font-size: 18px; margin-right: 20px; padding-bottom: 5px; outline: 0px; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(186, 32, 32);">发现 • 新食材</a></div></div><div class="Lp1 clear" style="margin: 0px; padding: 0px; zoom: 1; width: 680px; color: rgb(0, 0, 0); font-family: 'Microsoft YaHei', tahoma, arial, serif; font-size: 12px; line-height: 19.2000007629395px;"><ul style="margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding: 0px; list-style: none;"><li style="margin: 0px 22px 15px 0px; padding: 0px; float: left; width: 90px; font-size: 14px;"><div style="margin: 0px 0px 10px; padding: 0px;"><a title="甜菜根的做法" href="http://www.meishichina.com/YuanLiao/TianCaiGen/" target="_blank" style="color: rgb(51, 51, 51); position: relative; display: block; outline: 0px; text-align: center;"><img src="http://i3.meishichina.com/attachment/201411/18/13_1416287737ilOO.jpg" class="imgLoad" height="90" width="90" style="margin: 0px; padding: 0px; display: block; background: url(http://static.meishichina.com/v6/img/placeholder-88-31.png) 50% 50% no-repeat rgb(242, 242, 242);"><span style="margin: 0px; padding: 5px 0px 2px; display: block; overflow: hidden; width: 90px; height: 20px; text-overflow: ellipsis; white-space: nowrap; line-height: 20px;">甜菜根</span></a></div><p style="margin-bottom: 0px; padding: 0px; overflow: hidden; width: 90px; text-align: center; text-overflow: ellipsis; white-space: nowrap;"><a title="甜菜根汤" href="http://home.meishichina.com/recipe-199499.html" target="_blank" style="color: rgb(85, 85, 85);">甜菜根汤</a></p><p style="margin-bottom: 0px; padding: 0px; overflow: hidden; width: 90px; text-align: center; text-overflow: ellipsis; white-space: nowrap;"><a title="糖醋甜菜根" href="http://home.meishichina.com/recipe-199504.html" target="_blank" style="color: rgb(85, 85, 85);">糖醋甜菜根</a></p></li><li style="margin: 0px 22px 15px 0px; padding: 0px; float: left; width: 90px; font-size: 14px;"><div style="margin: 0px 0px 10px; padding: 0px;"><a title="水果藕的做法" href="http://www.meishichina.com/YuanLiao/ShuiGuoOu/" target="_blank" style="color: rgb(51, 51, 51); position: relative; display: block; outline: 0px; text-align: center;"><img src="http://i3.meishichina.com/attachment/201411/25/13_1416893700iW7i.jpg" class="imgLoad" height="90" width="90" style="margin: 0px; padding: 0px; display: block; background: url(http://static.meishichina.com/v6/img/placeholder-88-31.png) 50% 50% no-repeat rgb(242, 242, 242);"><span style="margin: 0px; padding: 5px 0px 2px; display: block; overflow: hidden; width: 90px; height: 20px; text-overflow: ellipsis; white-space: nowrap; line-height: 20px;">水果藕</span></a></div><p style="margin-bottom: 0px; padding: 0px; overflow: hidden; width: 90px; text-align: center; text-overflow: ellipsis; white-space: nowrap;"><a title="梨丝水果藕" href="http://home.meishichina.com/recipe-200301.html" target="_blank" style="color: rgb(85, 85, 85);">梨丝水果藕</a></p><p style="margin-bottom: 0px; padding: 0px; overflow: hidden; width: 90px; text-align: center; text-overflow: ellipsis; white-space: nowrap;"><a title="蜜汁水果藕" href="http://home.meishichina.com/recipe-200311.html" target="_blank" style="color: rgb(85, 85, 85);">蜜汁水果藕</a></p></li><li style="margin: 0px 22px 15px 0px; padding: 0px; float: left; width: 90px; font-size: 14px;"><div style="margin: 0px 0px 10px; padding: 0px;"><a title="黑蒜的做法" href="http://www.meishichina.com/YuanLiao/HeiSuan/" target="_blank" style="color: rgb(51, 51, 51); position: relative; display: block; outline: 0px; text-align: center;"><img src="http://i3.meishichina.com/attachment/201411/4/13_1415070693Fk61.jpg" class="imgLoad" height="90" width="90" style="margin: 0px; padding: 0px; display: block; background: url(http://static.meishichina.com/v6/img/placeholder-88-31.png) 50% 50% no-repeat rgb(242, 242, 242);"><span style="margin: 0px; padding: 5px 0px 2px; display: block; overflow: hidden; width: 90px; height: 20px; text-overflow: ellipsis; white-space: nowrap; line-height: 20px;">黑蒜</span></a></div><p style="margin-bottom: 0px; padding: 0px; overflow: hidden; width: 90px; text-align: center; text-overflow: ellipsis; white-space: nowrap;"><a title="黑蒜菠菜面" href="http://home.meishichina.com/recipe-120725.html" target="_blank" style="color: rgb(85, 85, 85);">黑蒜菠菜面</a></p><p style="margin-bottom: 0px; padding: 0px; overflow: hidden; width: 90px; text-align: center; text-overflow: ellipsis; white-space: nowrap;"><a title="黑蒜山药泥" href="http://home.meishichina.com/recipe-111181.html" target="_blank" style="color: rgb(85, 85, 85);">黑蒜山药泥</a></p></li><li style="margin: 0px 22px 15px 0px; padding: 0px; float: left; width: 90px; font-size: 14px;"><div style="margin: 0px 0px 10px; padding: 0px;"><a title="藜麦的做法" href="http://www.meishichina.com/YuanLiao/LiMai/" target="_blank" style="color: rgb(51, 51, 51); position: relative; display: block; outline: 0px; text-align: center;"><img src="http://i3.meishichina.com/attachment/201411/4/13_1415095261bnRb.jpg" class="imgLoad" height="90" width="90" style="margin: 0px; padding: 0px; display: block; background: url(http://static.meishichina.com/v6/img/placeholder-88-31.png) 50% 50% no-repeat rgb(242, 242, 242);"><span style="margin: 0px; padding: 5px 0px 2px; display: block; overflow: hidden; width: 90px; height: 20px; text-overflow: ellipsis; white-space: nowrap; line-height: 20px;">藜麦</span></a></div><p style="margin-bottom: 0px; padding: 0px; overflow: hidden; width: 90px; text-align: center; text-overflow: ellipsis; white-space: nowrap;"><a title="藜麦沙拉" href="http://home.meishichina.com/recipe-124665.html" target="_blank" style="color: rgb(85, 85, 85);">藜麦沙拉</a></p><p style="margin-bottom: 0px; padding: 0px; overflow: hidden; width: 90px; text-align: center; text-overflow: ellipsis; white-space: nowrap;"><a title="全麦藜麦包" href="http://home.meishichina.com/recipe-136069.html" target="_blank" style="color: rgb(85, 85, 85);">全麦藜麦包</a></p></li><li style="margin: 0px 22px 15px 0px; padding: 0px; float: left; width: 90px; font-size: 14px;"><div style="margin: 0px 0px 10px; padding: 0px;"><a title="皂角米的做法" href="http://www.meishichina.com/YuanLiao/ZaoJiaoMi/" target="_blank" style="color: rgb(51, 51, 51); position: relative; display: block; outline: 0px; text-align: center;"><img src="http://i3.meishichina.com/attachment/201411/4/13_1415093958raZ7.jpg" class="imgLoad" height="90" width="90" style="margin: 0px; padding: 0px; display: block; background: url(http://static.meishichina.com/v6/img/placeholder-88-31.png) 50% 50% no-repeat rgb(242, 242, 242);"><span style="margin: 0px; padding: 5px 0px 2px; display: block; overflow: hidden; width: 90px; height: 20px; text-overflow: ellipsis; white-space: nowrap; line-height: 20px;">皂角米</span></a></div><p style="margin-bottom: 0px; padding: 0px; overflow: hidden; width: 90px; text-align: center; text-overflow: ellipsis; white-space: nowrap;"><a title="皂角米莲子羹" href="http://home.meishichina.com/recipe-142996.html" target="_blank" style="color: rgb(85, 85, 85);">皂角米莲子羹</a></p><p style="margin-bottom: 0px; padding: 0px; overflow: hidden; width: 90px; text-align: center; text-overflow: ellipsis; white-space: nowrap;"><a title="皂角米银耳羹" href="http://home.meishichina.com/recipe-133407.html" target="_blank" style="color: rgb(85, 85, 85);">皂角米银耳羹</a></p></li><li style="margin: 0px 22px 15px 0px; padding: 0px; float: left; width: 90px; font-size: 14px;"><div style="margin: 0px 0px 10px; padding: 0px;"><a title="紫苏的做法" href="http://www.meishichina.com/YuanLiao/ZiSu/" target="_blank" style="color: rgb(51, 51, 51); position: relative; display: block; outline: 0px; text-align: center;"><img src="http://i3.meishichina.com/attachment/201411/5/13_14151777020Lc8.jpg" class="imgLoad" height="90" width="90" style="margin: 0px; padding: 0px; display: block; background: url(http://static.meishichina.com/v6/img/placeholder-88-31.png) 50% 50% no-repeat rgb(242, 242, 242);"><span style="margin: 0px; padding: 5px 0px 2px; display: block; overflow: hidden; width: 90px; height: 20px; text-overflow: ellipsis; white-space: nowrap; line-height: 20px;">紫苏</span></a></div><p style="margin-bottom: 0px; padding: 0px; overflow: hidden; width: 90px; text-align: center; text-overflow: ellipsis; white-space: nowrap;"><a title="紫苏爆沙甲" href="http://home.meishichina.com/recipe-185224.html" target="_blank" style="color: rgb(85, 85, 85);">紫苏爆沙甲</a></p><p style="margin-bottom: 0px; padding: 0px; overflow: hidden; width: 90px; text-align: center; text-overflow: ellipsis; white-space: nowrap;"><a title="紫苏焗鸡翅" href="http://home.meishichina.com/recipe-136672.html" target="_blank" style="color: rgb(85, 85, 85);">紫苏焗鸡翅</a></p></li></ul></div></div>
+        </div>
+        <!-- end  blog -->
+
+
+
+      </div>
+      <div class="col-md-4">
+
+        <div class="panel panel-default" style="margin-top:55px;">
+          <div class="panel-body">
+            <div id="asideBtns">
+            <span id="contentCategoryBtn" class="sel">分类</span>
+              <span id="contentNavBtn">书签</span>              
+              <span id="contentNoteBtn">笔记</span>
+              <span id="contentRefBtn">参考</span>
+            </div>
+            <div id="asidContent">
+              <div id="contentNavArea" style="display: none;">
+
+                <ul class="list-group">
+                  <li class="list-group-item">
+                    <!--  <span class="badge">14</span> --> <a href="#" class=" ">Cras justo odio</a>
+                  </li>
+                </ul>
+              </div>
+              <div id="contentCategoryArea" style="min-height: 100px">
+              	<div class="dropdown">
+              	  <h5 class="dropdown-toggle" id="categoryDropMenu" data-toggle="dropdown" aria-expanded="false">js framework</h5>
+				  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+				  	
+				    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">javascript</a></li>
+				    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">js framework</a></li>
+				    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">html css</a></li>
+				    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">web safety</a></li>
+				  </ul>
+				</div>
+              </div>
+              <div id="contentNoteArea" style="display: none; min-height: 100px" contenteditable="true">blogNote</div>
+              <div id="contentRefArea" style="display: none; min-height: 100px">blogRef</div>
+            </div>
+
+
+
+
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+
+
+
+</body></html>
