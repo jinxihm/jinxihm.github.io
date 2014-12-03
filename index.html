@@ -32,163 +32,6 @@
 
 <style>
 
-.cc-list{
-}
-
-.cc-item{
-border-bottom:1px solid #e1e8ed;
-padding-top:15px;
-padding-left:10px;
-padding-right:10px;
-padding-bottom:20px;
-}
-
-
-
-.cc-box{
-margin: 0px 0px 10px 0px;
-
-background-color: #fff;
-
-border-radius: 3px;
-font-size: 14px;
-padding: 8px 10px;
-min-height:32px;
-}
-.cc-box:after{
-clear:both;
-}
-
-#newCcBox{
-border: 1px solid #e1e8ed;
-outline: 0;
-}
-
-
-
-
-
-</style>
-
-
-<script>
-$(document).ready(function(){
-	
-	var newCcPlaceholder = null;
-	
-	AV.initialize('wooqq9lzgy9oav8z2w3z3catseza9pcivkveazkglzqyndw6', '7v81oyhqpkxwis3x5bykesmcxgjihspz38wrp51fbe2pdpdk');
-	// Declare the types.
-	var Post = AV.Object.extend('Post');
-	var Comment = AV.Object.extend('Comment');
-	var Topic = AV.Object.extend('Topic');
-	
-	
-	var query = new AV.Query(Post);
-	query.descending('createdTime');
-	query.find({
-	  success: function(results) {
-	    
-	    // Do something with the returned AV.Object values
-	    for (var i = 0; i < results.length; i++) {
-	    	if(i>10) break;
-	      var object = results[i];
-	      console.log(object.get('id'));
-	      console.log(object.get('createdTime'));
-	      console.log(object.get('html'));
-	      loadCc(object.get('html'));
-	    }
-	  },
-	  error: function(error) {
-		  console.log("Error: " + error.code + " " + error.message);
-	  }
-	});
-	
-	function initNewCcBox(){
-		$('#ccBoxFooter').hide();
-		$('#newCcBox').html('').css('min-height','32px').append(newCcPlaceholder).blur();
-	}
-	
-	function loadCc(html){
-	/* 	var ccItem = $('#ccItemTempl').clone().removeAttr('id');
-		ccItem.find('.cc-box').html(html);
-		ccItem.after('#ccItemTempl').show(); */
-		
-		var item = $('<div class="cc-item"><div class="cc-box"></div></div>').appendTo('#ccItemList');
-		item.find('.cc-box').html(html);
-		
-	}
-	
-	
-	$('#newCcBox').focus(function(){
-		newCcPlaceholder = $('#newCcPlaceholder').detach();
-		$('#newCcBox').css("min-height","100px");
-		$('#ccBoxFooter').show();
-	});
-	$('#newCcBox').blur(function(){
-		if($(this).text().trim() === ""){
-			initNewCcBox();
-		}		
-	});
-	$('#newCcBox').keyup(function(e){
-		if($(this).text().trim() === ""){
-			$('#sendCcBtn').prop('disabled', true);
-		}else{
-			$('#sendCcBtn').prop('disabled', false);
-			if(e.ctrlKey && e.which == 13){
-				$('#sendCcBtn').click();
-			}
-		}
-		
-		
-	});
-	
-	
-	
-	
-	
-	
-	$('#sendCcBtn').click(function(){
-		var post = new Post();
-		var text = $('#newCcBox').text();
-		var html = $('#newCcBox').html();
-		post.set('text', text);
-		post.set('html', html);
-		post.set('createdTime', (new Date()).getTime());
-		// topic... #topic#
-		post.save(null, {
-			success: function(post){
-				initNewCcBox();
-				
-				var item = $('<div class="cc-item"><div class="cc-box"></div></div>').insertAfter('#newCcItem');
-				item.find('.cc-box').html(html);
-			},
-			error: function(post, error){
-				alert('Failed to create new object, with error code: ' + error.description);
-			}
-		});
-		
-	});
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-		
-	
-	
-});// end of ready
-
-
-
-</script>
-
-<style>
-
 .dashboard-left {
 float: left;
 display:none;
@@ -233,6 +76,252 @@ margin: 0 auto;
   }
 }
 
+.cc-item{
+border-bottom:1px solid #e1e8ed;
+padding-top:8px;
+padding-left:30px;
+padding-right:10px;
+padding-bottom:20px;
+}
+
+
+
+.cc-box{
+margin: 0px 0px 10px 0px;
+
+background-color: #fff;
+
+border-radius: 3px;
+font-size: 14px;
+padding: 8px 10px;
+min-height:32px;
+}
+.cc-box:after{
+clear:both;
+}
+
+#newCcBox{
+border: 1px solid #e1e8ed;
+outline: 0;
+}
+
+#topicPanel{
+min-height:100px;
+padding-right:30px;
+
+}
+
+#topicPanel span{
+color:#0084B4;
+margin-right:20px;
+display: inline-block;
+line-height: 25px;
+padding:0 10px;
+}
+#topicPanel span:hover{
+cursor:pointer;
+/*background-color:#F5F5F5;*/
+background-color:#B7B7B7;
+color:white;
+
+}
+
+</style>
+
+
+<script>
+
+
+
+
+$(document).ready(function(){
+	
+	
+	
+	
+	AV.initialize('wooqq9lzgy9oav8z2w3z3catseza9pcivkveazkglzqyndw6', '7v81oyhqpkxwis3x5bykesmcxgjihspz38wrp51fbe2pdpdk');
+	// Declare the types.
+	var Post = AV.Object.extend('Post');
+	var Comment = AV.Object.extend('Comment');
+	var Topic = AV.Object.extend('Topic');
+	
+	
+	var query = new AV.Query(Post);
+	query.descending('createdTime');
+	query.find({
+	  success: function(results) {
+	    
+	    // Do something with the returned AV.Object values
+	    for (var i = 0; i < results.length; i++) {
+	    	if(i>10) break;
+	      var object = results[i];
+	      loadCc(object.get('html'));
+	    }
+	  },
+	  error: function(error) {
+		  console.log("Error: " + error.code + " " + error.message);
+	  }
+	});
+
+	
+	function loadCc(html){
+	/* 	var ccItem = $('#ccItemTempl').clone().removeAttr('id');
+		ccItem.find('.cc-box').html(html);
+		ccItem.after('#ccItemTempl').show(); */
+		
+		var item = $('<div class="cc-item"><div class="cc-box"></div></div>').appendTo('#ccItemList');
+		item.find('.cc-box').html(html);
+		
+	}
+	
+	
+	$('#newCcBox').focus(function(){
+		$('#newCcPlaceholder').remove();
+		$('#newCcBox').css("min-height","100px");
+		$('#ccBoxFooter').show();
+	});
+	
+	
+	
+	
+	$('#newCcBox').blur(function(){
+		var text = $(this).text();
+		var html = $(this).html();
+		if(text.trim() === "" && html.indexOf('<img>') < 0){			
+			//$('#newCcBox').append('<div id="newCcPlaceholder">有什么想法？</div>')
+			$('<div id="newCcPlaceholder">有什么想法？</div>').appendTo('#newCcBox').hide();
+			var codeToExec = "$('#ccBoxFooter').hide();$('#newCcBox').css('min-height','32px');$('#newCcPlaceholder').show()";
+			setTimeout(codeToExec,90);			
+			
+		}		
+	});
+	
+	$('#newCcBox').keyup(function(e){
+		if($(this).text().trim() === ""){
+			$('#sendCcBtn').prop('disabled', true);
+		}else{
+			$('#sendCcBtn').prop('disabled', false);
+			if(e.ctrlKey && e.which == 13){
+				$('#sendCcBtn').click();
+			}
+		}		 
+	});
+	
+	$('#sendCcBtn').click(function(){
+		var post = new Post();
+		var text = $('#newCcBox').text();
+		var html = $('#newCcBox').html();
+		post.set('text', text);
+		post.set('html', html);
+		post.set('createdTime', (new Date()).getTime());
+
+		post.save(null, {
+			success: function(post){				
+				$('#newCcBox').html('').blur();
+				
+				var item = $('<div class="cc-item"><div class="cc-box"></div></div>').insertAfter('#newCcItem');
+				item.find('.cc-box').html(html);
+				
+				// 符合该正则表达式的文字为主题
+				var reg = /#\S{1,15}#/g;
+				var topics = text.match(reg);
+				if(topics && topics.length > 0){
+					saveTopic(topics, post.id);
+				}
+			},
+			error: function(post, error){
+				console.log('Failed to create new object, with error code: ' + error.description);
+			}
+		});
+		
+	});
+	
+	function saveTopic(topics, postId){
+		
+		    if(topics.length == 0){
+		    	return;
+		    }
+			// 取最后一个,并去除前后#号
+			var topicName = topics.pop().slice(1,-1);
+			var query = new AV.Query(Topic);
+			query.equalTo('name', topicName);
+			query.find().then(function(results){
+				debugger;
+				// topic已存在
+				if(results !== null && results.length > 0){
+					var topic = results[0];
+					topic.add('postId', postId);
+					topic.set('postNum', (topic.get('postNum') || 0) + 1);
+					return topic.save();
+				// topic不存在
+				}else{
+					var topic = new Topic();
+					topic.set('name', topicName);
+					topic.set('postId',[postId]);
+					topic.set('postNum', 1);
+					return topic.save(null,{success: function(topic){
+						debugger;
+						console.log('create new topic succeed: ' + topic.id);
+					}});
+				}
+			}).then(function(){
+				console.log("save topic succeed");
+				// 递归调用
+				return saveTopic(topics, postId)
+			},function(error){
+				console.log("save topic error");
+				console.log("Error: " + error.code + " " + error.message);
+			}).then(function(){
+				// 查询主题标签
+				var topicQuery = new AV.Query(Topic);
+				topicQuery.descending('postNum');
+				return topicQuery.find();
+			}).then(function(allTopics){
+				// 更新标签面板
+				debugger;
+				$('#topicPanel').empty();
+				for(var i = 0; i<allTopics.length; i++){
+					
+					$('<span>#' + allTopics[i].get('name') + '#</span>').appendTo('#topicPanel');
+				}
+			},function(error){
+				console.log("query all topic error");
+				console.log("Error: " + error.code + " " + error.message);
+			});
+
+	}
+	
+	function initTopic(){
+		var topicQuery = new AV.Query(Topic);
+		topicQuery.descending('postNum');
+		topicQuery.find().then(function(allTopics){
+			// 更新标签面板
+			debugger;
+			for(var i = 0; i<allTopics.length; i++){
+				
+				$('<span>#' + allTopics[i].get('name') + '#</span>').appendTo('#topicPanel');
+			}
+		},function(error){
+			console.log("init topic error");
+			console.log("Error: " + error.code + " " + error.message);
+		});
+	};
+	
+	initTopic();
+	
+		
+	
+	
+});// end of ready
+
+
+
+</script>
+
+<style>
+
+
+
 
 </style>
 
@@ -251,22 +340,13 @@ margin: 0 auto;
           </div>
          </div>
          
+         <div class="panel panel-default">
+          <input placeholder="search here">
+         </div>
+         
          <div class="panel panel-default" >
-          <div class="panel-body" style="min-height:100px">
-           <span style="padding-right:15px">#足迹#</span>
-           <span style="padding-right:15px">#movie#</span>
-           <span style="padding-right:15px">#music#</span>
-           <span style="padding-right:15px">#心情#</span>
-           <span style="padding-right:15px">#sports#</span>
-           <span style="padding-right:15px">#美食#</span>
-           <span style="padding-right:15px">#javascript#</span>
-           <span style="padding-right:15px">#html5#</span>
-           <span style="padding-right:15px">#css#</span>
-           <span style="padding-right:15px">#GTD#</span>
-           <span style="padding-right:15px">#网络#</span>
-           <span style="padding-right:15px">#fun#</span>
-           <span style="padding-right:15px">#新媒体#</span>
-           <span style="padding-right:15px">#emacs#</span>
+          <div class="panel-body" id="topicPanel">
+            <!-- <a>#足迹#</a> -->           
           </div>
          </div>
     
@@ -275,7 +355,7 @@ margin: 0 auto;
       <div class="panel panel-default cc-list" id="ccItemList">
           <div class="cc-item" id="newCcItem" >
                <div class="cc-box" id="newCcBox" contentEditable=true>
-                <div id="newCcPlaceholder">有什么想法？</div>
+                  <div id="newCcPlaceholder">有什么想法？</div>
                </div>
                <div id="ccBoxFooter" style="display:none">
                   <button type="button" class="btn btn-default" style="border:0px">拍照</button>
@@ -288,11 +368,9 @@ margin: 0 auto;
     </div>
     <div class="dashboard-right">
     
-        <div class="panel panel-default">
-          <input placeholder="search here">
-        </div>
         
-        <div class="panel panel-default">
+        
+        <div class="panel panel-default" >
           <div class="panel-body" style="min-height:200px">
             todo list
           </div>
