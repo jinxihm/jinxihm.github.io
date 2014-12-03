@@ -1,19 +1,65 @@
 $(document).ready(function() {
 	
+	var listener = new window.keypress.Listener();
+	
+	listener.simple_combo("shift s", function() {
+	    console.log("You pressed shift and s");
+	});
+	
+	listener.simple_combo("tab", function() {
+	    console.log("You pressed tab ");
+	});
+	
+	listener.simple_combo("space a", function() {
+	    console.log("You pressed space a s ");
+	});
+
+	// There are also a few other shortcut methods:
+
+	// If we want to register a counting combo
+	listener.counting_combo("tab space", function(e, count) {
+	    console.log("You've pressed this " + count + " times.");
+	});
+
+	// If you want to register a sequence combo
+	listener.sequence_combo("up up down down left right left right b a enter", function() {
+	    lives = 30;
+	}, true);
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	window.wowblog = {};
-	wowblog.category = {};
+	wowblog.category = null;
 	wowblog.pageInfo = {};
 	// 获取目录信息
-	(function(){
+	/*(function(){
 		$.getJSON("/category.json", function(data){
 			wowblog.category = data; 
 		});
-	})();
+	})();*/
+	
+	// 更新目录数据
+	getContent('/category.json',function(data){
+		wowblog.category = data;
+		
+	}, function(data){
+		
+	})
 	
 	
 	
 	function isNewPage(){
-		return (location.href.indexOf('newblog')>-1);
+		//return (location.href.indexOf('newblog')>-1);
+		return true;
 	}
 
 	// 新建页面
@@ -134,9 +180,11 @@ $(document).ready(function() {
 		}
 		
 		
-		
-		
 	});
+	
+	
+	
+	
 	
 	
 	
@@ -178,10 +226,15 @@ $(document).ready(function() {
 	});
 	
 	
-	
-	
-	
-	
+	function updateCategory(){
+		var categoryList = wowblog.category;
+		for(var i = 0; i < categoryList.length; i++){
+			if($('#categoryDropMenu').text() === categoryList[i].title){
+				var url = makeupUrl(wowblog.pageInfo.path);
+				categoryList[i].push({title:$('#blogTitle').text(), url: url});
+			}
+		}
+	}
 	
 	
 	

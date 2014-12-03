@@ -14,10 +14,18 @@ var getContent = function getContent(path, successFunc, failFunc) {
 		error : failFunc
 	});
 };
+
 /**
- * 保存或更新文件。文件夹需要通过创建文件间接创建。
+ * 创建文件
  */
-var saveFile = function saveFile(path, fileContent, sha, successFunc, failFunc) {
+var createContent = function createContent(path, fileContent, successFunc, failFunc){
+	updateContent(path, fileContent, null, successFunc, failFunc);
+}
+
+/**
+ * 保存或更新文件。
+ */
+var updateContent = function updateContent(path, fileContent, sha, successFunc, failFunc) {
 	var inputData = {};
 	inputData.message = "my commit message";
 	inputData.committer = {
@@ -32,7 +40,7 @@ var saveFile = function saveFile(path, fileContent, sha, successFunc, failFunc) 
 	}
 	$.ajax({
 		type : "put",
-		url : reposUrl + sitePagesPath + path + token,
+		url : reposUrl + path + token,
 		contentType : "application/json",
 		data : JSON.stringify(inputData),
 		dataType : "json",
@@ -42,17 +50,22 @@ var saveFile = function saveFile(path, fileContent, sha, successFunc, failFunc) 
 };
 
 
-var createDir = function createDir(path, successFunc, failFunc){
+/**
+ * 文件夹需要通过创建文件间接创建。
+ */
+/*var createDir = function createDir(path, successFunc, failFunc){
 	//var dirIndex = {pageNum:2,pages:[{titel:"title", path: "path"}]}
 	
 	path = path + "/dirIndex.json";
 	var fileContent ="{}";
 	saveFile(path, fileContent, null, successFunc, failFunc);
 	
-};
+};*/
 
 
-
+var makeupUrl = function makeupUrl(path){
+	return reposUrl + path;
+}
 
 
 

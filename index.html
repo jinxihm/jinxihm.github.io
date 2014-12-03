@@ -2,16 +2,16 @@
 <html>
 <head>
 <meta charset="utf-8">
-<meta name="viewport"
-  content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="description" content="a test space">
 <meta name="author" content="fangliang">
 <title>My blog</title>
 
 <link href="resources/bootstrap331dist/css/bootstrap.css" rel="stylesheet">
 <link href="resources/octicons/octicons.css" rel="stylesheet">
+<link href="resources/foundation-icons/foundation-icons.css" rel="stylesheet">
 <!-- icons -->
-<link href="resources/css/wowblog.css" rel="stylesheet">
+<!-- <link href="resources/css/wowblog.css" rel="stylesheet"> -->
 <!-- icons -->
 
 <!-- make IE8 support HTML5 elements and media queries -->
@@ -22,179 +22,294 @@
 
 <script src="resources/jquery/jquery-1.11.1.min.js"></script>
 <script src="resources/bootstrap331dist/js/bootstrap.min.js"></script>
+<script src="resources/avos/av-mini.js"></script>
 
-<script src="resources/js/wowblog.js"></script>
+
 
 <!-- Local JavaScript -->
 
 
 
 <style>
-.btngrp * {
-  padding-right: 15px;
-  font-size: 24px;
-  color: #777;
+
+.cc-list{
 }
 
-.btngrp *:hover {
-  color: #4183c4;
-  cursor: pointer;
-}
-.category{
-  padding-bottom:20px;
-}
-.category .title{
-  font-size:21px;
-}
-.category .blog-title{
-  padding-left:10px;
+.cc-item{
+border-bottom:1px solid #e1e8ed;
+padding-top:15px;
+padding-left:10px;
+padding-right:10px;
+padding-bottom:20px;
 }
 
-.category .blog-title:hover{
-  cursor:pointer;
-  color:#337AB7;
+
+
+.cc-box{
+margin: 0px 0px 10px 0px;
+
+background-color: #fff;
+
+border-radius: 3px;
+font-size: 14px;
+padding: 8px 10px;
+min-height:32px;
 }
+.cc-box:after{
+clear:both;
+}
+
+#newCcBox{
+border: 1px solid #e1e8ed;
+outline: 0;
+}
+
+
+
+
 
 </style>
 
+
 <script>
+$(document).ready(function(){
+	
+	var newCcPlaceholder = null;
+	
+	AV.initialize('wooqq9lzgy9oav8z2w3z3catseza9pcivkveazkglzqyndw6', '7v81oyhqpkxwis3x5bykesmcxgjihspz38wrp51fbe2pdpdk');
+	// Declare the types.
+	var Post = AV.Object.extend('Post');
+	var Comment = AV.Object.extend('Comment');
+	var Topic = AV.Object.extend('Topic');
+	
+	
+	var query = new AV.Query(Post);
+	query.descending('createdTime');
+	query.find({
+	  success: function(results) {
+	    
+	    // Do something with the returned AV.Object values
+	    for (var i = 0; i < results.length; i++) {
+	    	if(i>10) break;
+	      var object = results[i];
+	      console.log(object.get('id'));
+	      console.log(object.get('createdTime'));
+	      console.log(object.get('html'));
+	      loadCc(object.get('html'));
+	    }
+	  },
+	  error: function(error) {
+		  console.log("Error: " + error.code + " " + error.message);
+	  }
+	});
+	
+	function initNewCcBox(){
+		$('#ccBoxFooter').hide();
+		$('#newCcBox').html('').css('min-height','32px').append(newCcPlaceholder).blur();
+	}
+	
+	function loadCc(html){
+	/* 	var ccItem = $('#ccItemTempl').clone().removeAttr('id');
+		ccItem.find('.cc-box').html(html);
+		ccItem.after('#ccItemTempl').show(); */
+		
+		var item = $('<div class="cc-item"><div class="cc-box"></div></div>').appendTo('#ccItemList');
+		item.find('.cc-box').html(html);
+		
+	}
+	
+	
+	$('#newCcBox').focus(function(){
+		newCcPlaceholder = $('#newCcPlaceholder').detach();
+		$('#newCcBox').css("min-height","100px");
+		$('#ccBoxFooter').show();
+	});
+	$('#newCcBox').blur(function(){
+		if($(this).text().trim() === ""){
+			initNewCcBox();
+		}		
+	});
+	$('#newCcBox').keyup(function(e){
+		if($(this).text().trim() === ""){
+			$('#sendCcBtn').prop('disabled', true);
+		}else{
+			$('#sendCcBtn').prop('disabled', false);
+			if(e.ctrlKey && e.which == 13){
+				$('#sendCcBtn').click();
+			}
+		}
+		
+		
+	});
+	
+	
+	
+	
+	
+	
+	$('#sendCcBtn').click(function(){
+		var post = new Post();
+		var text = $('#newCcBox').text();
+		var html = $('#newCcBox').html();
+		post.set('text', text);
+		post.set('html', html);
+		post.set('createdTime', (new Date()).getTime());
+		// topic... #topic#
+		post.save(null, {
+			success: function(post){
+				initNewCcBox();
+				
+				var item = $('<div class="cc-item"><div class="cc-box"></div></div>').insertAfter('#newCcItem');
+				item.find('.cc-box').html(html);
+			},
+			error: function(post, error){
+				alert('Failed to create new object, with error code: ' + error.description);
+			}
+		});
+		
+	});
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+		
+	
+	
+});// end of ready
+
+
+
 </script>
+
+<style>
+
+.dashboard-left {
+float: left;
+display:none;
+width: 290px;
+}
+
+.content-main {
+float: left;
+width: 590px;
+margin: 0px 0px 0px 10px;
+}
+
+.dashboard-right {
+float: left;
+display:none;
+width: 290px;
+margin: 0px 0px 0px 10px;
+}
+
+
+.wrapper {
+width: 600px;
+position: relative;
+margin: 0 auto;
+}
+
+@media (min-width: 992px){
+  .wrapper {
+  width: 890px;
+  }
+  .dashboard-left{
+  display:block;
+  }
+}
+
+@media (min-width: 1236px){
+  .wrapper {
+  width: 1190px;
+  }
+  .dashboard-right{
+  display:block;
+  }
+}
+
+
+</style>
+
+
 </head>
-<body style="background-color: #F5F5D5">
-
-  <nav class="navbar navbar-default navbar-fixed-top" role="navigation"
-    style="background-color: white; height:46px">
-    <div class="container" style="margin-top: 5px">
-      <div class="row" >
+<body style="padding-top:58px;background-image:url(http://www.cloud7.com.cn/Themes/Cloud7Global/Styles/Images/block01-bg.jpg)"> 
 
 
-        <div class="col-md-5">
-            <a href="/newblog.html" target="_blank">
-            <span id="create" class="glyphicon glyphicon-plus navSpan" style="margin-top: 10px;"></span>
-            </a>  
-            
-
-       
-
+  <div class="wrapper">
+    <div class="dashboard-left">
+      <div class="panel panel-default" >
+          <div class="panel-body" style="min-height:100px">
+           lz楼主比较懒
+                                      不喜欢写长篇大作
+                                       但经常冒出一些想法
+          </div>
+         </div>
+         
+         <div class="panel panel-default" >
+          <div class="panel-body" style="min-height:100px">
+           <span style="padding-right:15px">#足迹#</span>
+           <span style="padding-right:15px">#movie#</span>
+           <span style="padding-right:15px">#music#</span>
+           <span style="padding-right:15px">#心情#</span>
+           <span style="padding-right:15px">#sports#</span>
+           <span style="padding-right:15px">#美食#</span>
+           <span style="padding-right:15px">#javascript#</span>
+           <span style="padding-right:15px">#html5#</span>
+           <span style="padding-right:15px">#css#</span>
+           <span style="padding-right:15px">#GTD#</span>
+           <span style="padding-right:15px">#网络#</span>
+           <span style="padding-right:15px">#fun#</span>
+           <span style="padding-right:15px">#新媒体#</span>
+           <span style="padding-right:15px">#emacs#</span>
+          </div>
+         </div>
+    
+    </div>
+    <div class="content-main">
+      <div class="panel panel-default cc-list" id="ccItemList">
+          <div class="cc-item" id="newCcItem" >
+               <div class="cc-box" id="newCcBox" contentEditable=true>
+                <div id="newCcPlaceholder">有什么想法？</div>
+               </div>
+               <div id="ccBoxFooter" style="display:none">
+                  <button type="button" class="btn btn-default" style="border:0px">拍照</button>
+                  <button type="button" class="btn btn-default" style="border:0px">添加链接</button>
+                  <button type="button" class="btn btn-default" style="border:0px">地理位置</button>
+                  <button id="sendCcBtn" disabled type="button" class="btn btn-success" style="float:right;margin-right:18px">&nbsp;保&nbsp;存&nbsp;</button>
+               </div>
+            </div>              
+        </div>    
+    </div>
+    <div class="dashboard-right">
+    
+        <div class="panel panel-default">
+          <input placeholder="search here">
         </div>
         
-        <div class="col-md-2">
-         
-        </div>
-
-        <div class="col-md-3">
-          <div class="">
-           
+        <div class="panel panel-default">
+          <div class="panel-body" style="min-height:200px">
+            todo list
           </div>
         </div>
-
-      </div>
-    </div>
-  </nav>
-
-  <div class="container">
-
-    <div class="row">
-      <div class="col-md-12" style="height: 40px">&nbsp;</div>
-    </div>
-    <div class="row">
-     <!--  <div class="col-md-1"></div>
-      <div class="col-md-2">
-        <div class="blog ">
-          <div id="main-nav" contentEditable=true>
-            <div class="categorys">
-              <ul>
-                <li><a>javascript</a></li>
-                <li><a>css html</a></li>
-                <li><a>web safety</a></li>
-                <li><a>jquery</a></li>
-                <li><a>java</a></li>
-                <li><a>spring</a></li>
-              </ul>
-            </div>
+        
+        <div class="panel panel-default">
+          <div class="panel-body" style="min-height:100px">
+            tomato GTD
           </div>
         </div>
-      </div> -->
-      
-      <div class="col-md-2">
-      	<div class="category">
-      		<div class="title">javascript</div>
-      		<div class="blog-title">闭包</div>
-      		<div class="blog-title">作用域链作用域链作用域链作用域链作用域链作用域链作用域链作用域链</div>
-      		<div class="blog-title">原型链</div>
-      		<div class="blog-title">匿名函数</div>
-      		<div class="blog-title">匿名函数</div>
-      		<div class="blog-title">匿名函数</div>
-      		
-      	</div>
-      	
-      	<div class="category">
-      		<div class="title">css html</div>
-      		<div class="blog-title"><a>响应式布局</a></div>
-      	</div>
-      	
-      </div>
-      
-      <div class="col-md-2">
-      	<div class="category">
-      		<div class="title">css html</div>
-      		<div class="blog-title">响应式布局</div>
-      	</div>
-      </div>
-      
-      
-      <div class="col-md-2">
-      	<div class="category">
-      		<div class="title">js framework</div>
-      		<div class="blog-title">jquery</div>
-      	</div>
-      </div>
-      
-      <div class="col-md-2">
-      	<div class="category">
-      		<div class="title">web safe</div>
-      		<div class="blog-title">XSS</div>
-      		<div class="blog-title">CSRF</div>
-      		<div class="blog-title">SSO, persona, oauth</div>
-      	</div>
-      </div>
-      
-      <div class="col-md-2">
-      	<div class="category">
-      		<div class="title">life</div>
-      		<div class="blog-title">fun</div>
-      		<div class="blog-title">food</div>
-      		<div class="blog-title">sport</div>
-      		<div class="blog-title">movie</div>
-      	</div>
-      </div>
-      
-
-
     </div>
   </div>
-  
-  <!-- 添加分类-->
-  <div class="modal fade" style="display:none">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        <h5 class="modal-title">名称:</h5>
-        <input type="text" id="categoryName">
-        <h5 class="modal-title">位置:</h5>
-        <input type="text" id="categoryPos">
-      </div>
-      <div class="modal-body">
-        <p>One fine body&hellip;</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+
+
+
+
+
 
 </body>
 </html>
