@@ -32,16 +32,24 @@
 
 <style>
 
+body{
+overflow-y: scroll;  
+font-family: 'Hiragino Sans GB', 'Microsoft YaHei', 微软雅黑, tahoma, arial, simsun, 宋体;
+padding-top:58px;
+/*background-image:url(http://www.cloud7.com.cn/Themes/Cloud7Global/Styles/Images/block01-bg.jpg)*/
+background-image:url(resources/img/bg1.png);
+}
+
 .dashboard-left {
 float: left;
 display:none;
-width: 290px;
+width: 280px;
 }
 
 .content-main {
 float: left;
 width: 590px;
-margin: 0px 0px 0px 10px;
+margin: 0px 0px 0px 20px;
 }
 
 .dashboard-right {
@@ -76,43 +84,44 @@ margin: 0 auto;
   }
 }
 
-.cc-item{
-border-bottom:1px solid #e1e8ed;
-padding-top:8px;
-padding-left:30px;
-padding-right:10px;
-padding-bottom:20px;
+#me{
+background-color:transparent;
+border:0px;
+color:white;
+}
+#me img{
+max-width: 280px;
+/*max-height:169px  :这个值不需要设，否则max-width可能不起作用*/
 }
 
+#about{
+border-radius: 0px;
+border:0px;
+border-bottom:1px solid gray;
+background-color:transparent;
+color:gray;
+padding-left:35px;
+padding-bottom:5px;
+font-size:26px;
 
-
-.cc-box{
-margin: 0px 0px 10px 0px;
-
-background-color: #fff;
-
-border-radius: 3px;
-font-size: 14px;
-padding: 8px 10px;
-min-height:32px;
 }
-.cc-box:after{
-clear:both;
+#about span{
+padding-right:8px;
 }
 
-#newCcBox{
-border: 1px solid #e1e8ed;
-outline: 0;
-}
 
 #topicPanel{
 min-height:100px;
-padding-right:30px;
+padding-left:0px;
+margin-top:50px;
 
+background-color:#474747;
+border:0px;
 }
 
 #topicPanel span{
-color:#0084B4;
+/*color:#0084B4;*/
+color:white;
 margin-right:20px;
 display: inline-block;
 line-height: 25px;
@@ -126,6 +135,71 @@ color:white;
 
 }
 
+.cc-item{
+border-bottom:1px solid #e1e8ed;
+padding-top:8px;
+padding-left:30px;
+padding-right:10px;
+padding-bottom:20px;
+}
+
+
+
+#ccBoxFooter{
+border-top:1px solid #efeeee;
+padding-top:10px;
+}
+
+
+
+
+.cc-box{
+margin: 0px 0px 10px 0px;
+
+background-color: #fff;
+
+border-radius: 3px;
+font-size: 14px;
+padding: 8px 0px;
+min-height:32px;
+}
+.cc-box:after{
+clear:both;
+}
+
+#newCcBox{
+border: 1px solid #e1e8ed;
+outline: 0;
+}
+#newCcBox:focus{
+border: 0px;
+}
+
+
+
+#searchPanel{
+background-color:transparent;
+
+border:0px;
+}
+#searchPanel input{
+color:white;
+background-color:transparent;
+border:0px;
+width:100%;
+}
+
+#tomatoPanel{
+background-color:transparent;
+border:0px;
+color:white;
+}
+
+#tomatoPanel img{
+max-width: 290px;
+max-height:290px
+}
+
 </style>
 
 
@@ -135,23 +209,17 @@ color:white;
 
 
 $(document).ready(function(){
-	
-	
-	
-	
+
 	AV.initialize('wooqq9lzgy9oav8z2w3z3catseza9pcivkveazkglzqyndw6', '7v81oyhqpkxwis3x5bykesmcxgjihspz38wrp51fbe2pdpdk');
-	// Declare the types.
 	var Post = AV.Object.extend('Post');
 	var Comment = AV.Object.extend('Comment');
-	var Topic = AV.Object.extend('Topic');
+	var Topic = AV.Object.extend('Topic');	
 	
-	
+	// 加载前10篇文章
 	var query = new AV.Query(Post);
 	query.descending('createdTime');
 	query.find({
 	  success: function(results) {
-	    
-	    // Do something with the returned AV.Object values
 	    for (var i = 0; i < results.length; i++) {
 	    	if(i>10) break;
 	      var object = results[i];
@@ -162,37 +230,69 @@ $(document).ready(function(){
 		  console.log("Error: " + error.code + " " + error.message);
 	  }
 	});
+	// 查询全部话题标签
+	function initTopic(){
+		var topicQuery = new AV.Query(Topic);
+		topicQuery.descending('postNum');
+		topicQuery.find().then(function(allTopics){
+			// 更新标签面板
+			for(var i = 0; i<allTopics.length; i++){				
+				$('<span>' + allTopics[i].get('name') + '</span>').appendTo('#topicPanel');
+			}
+		},function(error){
+			console.log("init topic error");
+			console.log("Error: " + error.code + " " + error.message);
+		});
+	};	
+	initTopic();
 
-	
+
+	// 加载文章内容
 	function loadCc(html){
-	/* 	var ccItem = $('#ccItemTempl').clone().removeAttr('id');
-		ccItem.find('.cc-box').html(html);
-		ccItem.after('#ccItemTempl').show(); */
-		
 		var item = $('<div class="cc-item"><div class="cc-box"></div></div>').appendTo('#ccItemList');
-		item.find('.cc-box').html(html);
-		
+		item.find('.cc-box').html(html);		
 	}
 	
-	
+	$('#topicPanel').on({click:function(){
+		var topicQry = new AV.Query(Topic);
+		topicQry.equalTo("name", $(this).text());
+		topicQry.find().then(function(result){
+			var postIdsArr = result[0].get('postId');
+			var postIdsStr = postIdsArr.join('","');
+			var cql = 'select html from Post where objectId in ( "' + postIdsStr + '" ) order by createdTime desc';			
+			AV.Query.doCloudQuery(cql, {
+				success: function(result){
+					var results = result.results;
+					if(results.length > 0){
+						$('#ccItemList').empty();
+						for(var i=0; i<results.length; i++){
+							loadCc(results[i].get('html'));
+						}
+					}					
+				},
+				error: function(error){
+					console.log('根据主题查找post失败');
+				}
+			})
+		},function(error){
+			console.log('find topic failed. ' + error.description)
+		})	
+	}},"span");
+		
 	$('#newCcBox').focus(function(){
 		$('#newCcPlaceholder').remove();
 		$('#newCcBox').css("min-height","100px");
 		$('#ccBoxFooter').show();
 	});
 	
-	
-	
-	
 	$('#newCcBox').blur(function(){
 		var text = $(this).text();
 		var html = $(this).html();
-		if(text.trim() === "" && html.indexOf('<img>') < 0){			
-			//$('#newCcBox').append('<div id="newCcPlaceholder">有什么想法？</div>')
+		$('#newCcBox').css('border','0px');
+		if(text.trim() === "" && html.indexOf('<img') < 0){			
 			$('<div id="newCcPlaceholder">有什么想法？</div>').appendTo('#newCcBox').hide();
 			var codeToExec = "$('#ccBoxFooter').hide();$('#newCcBox').css('min-height','32px');$('#newCcPlaceholder').show()";
-			setTimeout(codeToExec,90);			
-			
+			setTimeout(codeToExec,0);	
 		}		
 	});
 	
@@ -214,7 +314,6 @@ $(document).ready(function(){
 		post.set('text', text);
 		post.set('html', html);
 		post.set('createdTime', (new Date()).getTime());
-
 		post.save(null, {
 			success: function(post){				
 				$('#newCcBox').html('').blur();
@@ -232,12 +331,10 @@ $(document).ready(function(){
 			error: function(post, error){
 				console.log('Failed to create new object, with error code: ' + error.description);
 			}
-		});
-		
+		});		
 	});
 	
-	function saveTopic(topics, postId){
-		
+	function saveTopic(topics, postId){		
 		    if(topics.length == 0){
 		    	return;
 		    }
@@ -245,8 +342,7 @@ $(document).ready(function(){
 			var topicName = topics.pop().slice(1,-1);
 			var query = new AV.Query(Topic);
 			query.equalTo('name', topicName);
-			query.find().then(function(results){
-				debugger;
+			query.find().then(function(results){				
 				// topic已存在
 				if(results !== null && results.length > 0){
 					var topic = results[0];
@@ -260,7 +356,7 @@ $(document).ready(function(){
 					topic.set('postId',[postId]);
 					topic.set('postNum', 1);
 					return topic.save(null,{success: function(topic){
-						debugger;
+						
 						console.log('create new topic succeed: ' + topic.id);
 					}});
 				}
@@ -278,116 +374,69 @@ $(document).ready(function(){
 				return topicQuery.find();
 			}).then(function(allTopics){
 				// 更新标签面板
-				debugger;
 				$('#topicPanel').empty();
-				for(var i = 0; i<allTopics.length; i++){
-					
-					$('<span>#' + allTopics[i].get('name') + '#</span>').appendTo('#topicPanel');
+				for(var i = 0; i<allTopics.length; i++){					
+					$('<span>' + allTopics[i].get('name') + '</span>').appendTo('#topicPanel');
 				}
 			},function(error){
 				console.log("query all topic error");
 				console.log("Error: " + error.code + " " + error.message);
 			});
-
 	}
 	
-	function initTopic(){
-		var topicQuery = new AV.Query(Topic);
-		topicQuery.descending('postNum');
-		topicQuery.find().then(function(allTopics){
-			// 更新标签面板
-			debugger;
-			for(var i = 0; i<allTopics.length; i++){
-				
-				$('<span>#' + allTopics[i].get('name') + '#</span>').appendTo('#topicPanel');
-			}
-		},function(error){
-			console.log("init topic error");
-			console.log("Error: " + error.code + " " + error.message);
-		});
-	};
-	
-	initTopic();
-	
-		
 	
 	
 });// end of ready
-
-
-
 </script>
 
-<style>
-
-
-
-
-</style>
-
-
 </head>
-<body style="padding-top:58px;background-image:url(http://www.cloud7.com.cn/Themes/Cloud7Global/Styles/Images/block01-bg.jpg)"> 
-
-
+<body> 
   <div class="wrapper">
     <div class="dashboard-left">
-      <div class="panel panel-default" >
-          <div class="panel-body" style="min-height:100px">
-           lz楼主比较懒
-                                      不喜欢写长篇大作
-                                       但经常冒出一些想法
-          </div>
-         </div>
-         
-         <div class="panel panel-default">
-          <input placeholder="search here">
-         </div>
-         
-         <div class="panel panel-default" >
-          <div class="panel-body" id="topicPanel">
-            <!-- <a>#足迹#</a> -->           
-          </div>
-         </div>
     
+        <div class="panel panel-default" id="me">
+          <div><img src="resources/img/t1.jpg" ></div>
+        </div>
+        
+        <div class="panel panel-default" id="about"> 
+            <span>发现美</span><span>·</span><span>表达美</span>
+        </div>
+         
+         <div class="panel panel-default" id="topicPanel"></div>      
+         
     </div>
     <div class="content-main">
-      <div class="panel panel-default cc-list" id="ccItemList">
+      <div class="panel panel-default" >
           <div class="cc-item" id="newCcItem" >
-               <div class="cc-box" id="newCcBox" contentEditable=true>
+               <div class="cc-box" id="newCcBox" style="border:0px" contentEditable=true>
                   <div id="newCcPlaceholder">有什么想法？</div>
-               </div>
+               </div>               
+               
                <div id="ccBoxFooter" style="display:none">
                   <button type="button" class="btn btn-default" style="border:0px">拍照</button>
-                  <button type="button" class="btn btn-default" style="border:0px">添加链接</button>
-                  <button type="button" class="btn btn-default" style="border:0px">地理位置</button>
+                  <button type="button" class="btn btn-default" style="border:0px">链接</button>
+                  <button type="button" class="btn btn-default" style="border:0px">位置</button>
                   <button id="sendCcBtn" disabled type="button" class="btn btn-success" style="float:right;margin-right:18px">&nbsp;保&nbsp;存&nbsp;</button>
                </div>
-            </div>              
+            </div>     
+            <div id="ccItemList"></div>         
         </div>    
     </div>
-    <div class="dashboard-right">
+    <!-- <div class="dashboard-right">
     
+        <div class="panel panel-default" id="searchPanel">
+          <input placeholder="search here" id="searchInput">
+         </div>
         
-        
-        <div class="panel panel-default" >
-          <div class="panel-body" style="min-height:200px">
-            todo list
-          </div>
+        <div class="panel panel-default" id="tomatoPanel">
+          <img src="resources/img/p4.jpg" >
         </div>
         
-        <div class="panel panel-default">
-          <div class="panel-body" style="min-height:100px">
-            tomato GTD
-          </div>
-        </div>
-    </div>
+        <div class="panel panel-default" id="todoList">
+          
+        </div>   
+    </div> -->
+    
   </div>
-
-
-
-
-
-
 </body>
 </html>
