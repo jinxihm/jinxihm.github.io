@@ -3,423 +3,118 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<meta name="description" content="mirror mirror">
+<meta name="description" content="my place">
 <meta name="author" content="fangliang">
-<title>jinxi</title>
+<title>无魂</title>
 
 <link href="resources/bootstrap331dist/css/bootstrap.css" rel="stylesheet">
 <link href="resources/octicons/octicons.css" rel="stylesheet">
 <link href="resources/foundation-icons/foundation-icons.css" rel="stylesheet">
-
-<!-- make IE8 support HTML5 elements and media queries -->
-<!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
+<link href="resources/css/style.css" rel="stylesheet">
 
 <script src="resources/jquery/jquery-1.11.1.min.js"></script>
 <script src="resources/bootstrap331dist/js/bootstrap.min.js"></script>
 <script src="resources/avos/av-mini.js"></script>
-
-
-
-<!-- Local JavaScript -->
-
-
-
-<style>
-
-body{
-overflow-y: scroll;  
-font-family: 'Hiragino Sans GB', 'Microsoft YaHei', 微软雅黑, tahoma, arial, simsun, 宋体;
-padding-top:58px;
-background-image:url(resources/img/bg1.png);
-background-color:#3D3D3D;
-}
-
-.dashboard-left {
-float: left;
-display:none;
-width: 280px;
-}
-
-.content-main {
-float: left;
-width: 590px;
-margin: 0px 0px 0px 20px;
-}
-
-.dashboard-right {
-float: left;
-display:none;
-width: 290px;
-margin: 0px 0px 0px 10px;
-}
-
-
-.wrapper {
-width: 600px;
-position: relative;
-margin: 0 auto;
-}
-
-@media (min-width: 992px){
-  .wrapper {
-  width: 890px;
-  }
-  .dashboard-left{
-  display:block;
-  }
-}
-
-@media (min-width: 1236px){
-  .wrapper {
-  width: 1190px;
-  }
-  .dashboard-right{
-  display:block;
-  }
-}
-
-#me{
-background-color:transparent;
-border:0px;
-color:white;
-}
-#me img{
-max-width: 280px;
-/*max-height:169px  :这个值不需要设，否则max-width可能不起作用*/
-}
-
-#about{
-border-radius: 0px;
-border:0px;
-border-bottom:1px solid gray;
-background-color:transparent;
-color:gray;
-padding-left:35px;
-padding-bottom:5px;
-font-size:26px;
-
-}
-#about span{
-padding-right:8px;
-}
-
-
-#topicPanel{
-min-height:100px;
-padding-left:0px;
-margin-top:50px;
-
-background-color:#474747;
-border:0px;
-}
-
-#topicPanel span{
-/*color:#0084B4;*/
-color:white;
-margin-right:20px;
-display: inline-block;
-line-height: 25px;
-padding:0 10px;
-}
-#topicPanel span:hover{
-cursor:pointer;
-/*background-color:#F5F5F5;*/
-background-color:#B7B7B7;
-color:white;
-
-}
-
-.cc-item{
-border-bottom:1px solid #e1e8ed;
-padding-top:8px;
-padding-left:30px;
-padding-right:10px;
-padding-bottom:20px;
-}
-
-
-
-#ccBoxFooter{
-border-top:1px solid #efeeee;
-padding-top:10px;
-}
-
-
-
-
-.cc-box{
-margin: 0px 0px 10px 0px;
-
-background-color: #fff;
-
-border-radius: 3px;
-font-size: 14px;
-padding: 8px 0px;
-min-height:32px;
-}
-.cc-box:after{
-clear:both;
-}
-
-#newCcBox{
-border: 1px solid #e1e8ed;
-outline: 0;
-}
-#newCcBox:focus{
-border: 0px;
-}
-
-
-
-#searchPanel{
-background-color:transparent;
-
-border:0px;
-}
-#searchPanel input{
-color:white;
-background-color:transparent;
-border:0px;
-width:100%;
-}
-
-#tomatoPanel{
-background-color:transparent;
-border:0px;
-color:white;
-}
-
-#tomatoPanel img{
-max-width: 290px;
-max-height:290px
-}
-
-</style>
-
-
+<script src="resources/js/script.js"></script>
 <script>
+	$(document).ready(function() {
 
+		AV.initialize(appId, appKey);
 
+		// 加载全部标签
+		loadTag();
 
+		// 加载前20篇文章
+		loadPost(0, 20);
 
-$(document).ready(function(){
-
-	AV.initialize('7reogkcbozs088jdpq1zsw5usbz7vtd1id936ks9bqk6r34k', 'da3nhru3nu9ob8wek51dkbwn4qvfnmdw338le9b8tiab9o5j');
-	var Post = AV.Object.extend('Post');
-	var Comment = AV.Object.extend('Comment');
-	var Topic = AV.Object.extend('Topic');	
-	
-	// 加载前10篇文章
-	var query = new AV.Query(Post);
-	query.descending('createdTime');
-	query.find({
-	  success: function(results) {
-	    for (var i = 0; i < results.length; i++) {
-	    	if(i>10) break;
-	      var object = results[i];
-	      loadCc(object.get('html'));
-	    }
-	  },
-	  error: function(error) {
-		  console.log("Error: " + error.code + " " + error.message);
-	  }
-	});
-	// 查询全部话题标签
-	function initTopic(){
-		var topicQuery = new AV.Query(Topic);
-		topicQuery.descending('postNum');
-		topicQuery.find().then(function(allTopics){
-			// 更新标签面板
-			for(var i = 0; i<allTopics.length; i++){				
-				$('<span>' + allTopics[i].get('name') + '</span>').appendTo('#topicPanel');
+		$('#tagPanel').on({
+			click : function() {
+				loadPostOfTag($(this).text());
 			}
-		},function(error){
-			console.log("init topic error");
-			console.log("Error: " + error.code + " " + error.message);
+		}, ".tag");
+
+		$('#newPostPlaceholder').click(function() {
+			$(this).css('display', 'none');
+			$('#newPostBox').css('display', 'block').focus();
+			$('#toolBar').css('display', 'block');
+			$('#newPostItem').css('margin-bottom', '15px').addClass('bottom-radius');
+			$('#newPostItem').css('box-shadow', '1px 1px 40px rgba(0, 109, 109, 1)');
+			$('.first-post').addClass('top-radius');
+			$('#postList .post-item').css('opacity', '0.1');
 		});
-	};	
-	initTopic();
 
+		$('#newPostBox').blur(function() {
+			var text = $(this).text();
+			var html = $(this).html();
+			if (text.trim() === "" && html.indexOf('<img') < 0 && html.indexOf('<video') < 0) {
+				$(this).css('display', 'none');
+				$('#toolBar').css('display', 'none');
+				$('#newPostPlaceholder').css('display', 'block');
+				$('#newPostItem').css('margin-bottom', '0px').removeClass('bottom-radius');
+				$('#newPostItem').css('box-shadow', 'none');
+				$('.first-post').css('border-top-left-radius', '0px').removeClass('top-radius');
+				$('#postList .post-item').css('opacity', '1');
+			}
+		});
 
-	// 加载文章内容
-	function loadCc(html){
-		var item = $('<div class="cc-item"><div class="cc-box"></div></div>').appendTo('#ccItemList');
-		item.find('.cc-box').html(html);		
-	}
-	
-	$('#topicPanel').on({click:function(){
-		var topicQry = new AV.Query(Topic);
-		topicQry.equalTo("name", $(this).text());
-		topicQry.find().then(function(result){
-			var postIdsArr = result[0].get('postId');
-			var postIdsStr = postIdsArr.join('","');
-			var cql = 'select html from Post where objectId in ( "' + postIdsStr + '" ) order by createdTime desc';			
-			AV.Query.doCloudQuery(cql, {
-				success: function(result){
-					var results = result.results;
-					if(results.length > 0){
-						$('#ccItemList').empty();
-						for(var i=0; i<results.length; i++){
-							loadCc(results[i].get('html'));
-						}
-					}					
-				},
-				error: function(error){
-					console.log('根据主题查找post失败');
+		$('#newPostBox').keyup(function(e) {
+			if ($(this).text().trim() === "") {
+				$('#createPostBtn').prop('disabled', true);
+			} else {
+				$('#createPostBtn').prop('disabled', false);
+				if (e.ctrlKey && e.which == 13) {
+					$('#createPostBtn').click();
 				}
-			})
-		},function(error){
-			console.log('find topic failed. ' + error.description)
-		})	
-	}},"span");
-		
-	$('#newCcBox').focus(function(){
-		$('#newCcPlaceholder').remove();
-		$('#newCcBox').css("min-height","100px");
-		$('#ccBoxFooter').show();
-	});
-	
-	$('#newCcBox').blur(function(){
-		var text = $(this).text();
-		var html = $(this).html();
-		$('#newCcBox').css('border','0px');
-		if(text.trim() === "" && html.indexOf('<img') < 0){			
-			$('<div id="newCcPlaceholder">有什么想法？</div>').appendTo('#newCcBox').hide();
-			var codeToExec = "$('#ccBoxFooter').hide();$('#newCcBox').css('min-height','32px');$('#newCcPlaceholder').show()";
-			setTimeout(codeToExec,0);	
-		}		
-	});
-	
-	$('#newCcBox').keyup(function(e){
-		if($(this).text().trim() === ""){
-			$('#sendCcBtn').prop('disabled', true);
-		}else{
-			$('#sendCcBtn').prop('disabled', false);
-			if(e.ctrlKey && e.which == 13){
-				$('#sendCcBtn').click();
 			}
-		}		 
+		});
+
+		$('#createPostBtn').click(function() {
+			savePost($('#newPostBox').text(), $('#newPostBox').html());
+		});
+
 	});
-	
-	$('#sendCcBtn').click(function(){
-		var post = new Post();
-		var text = $('#newCcBox').text();
-		var html = $('#newCcBox').html();
-		post.set('text', text);
-		post.set('html', html);
-		post.set('createdTime', (new Date()).getTime());
-		post.save(null, {
-			success: function(post){				
-				$('#newCcBox').html('').blur();
-				
-				var item = $('<div class="cc-item"><div class="cc-box"></div></div>').insertAfter('#newCcItem');
-				item.find('.cc-box').html(html);
-				
-				// 符合该正则表达式的文字为主题
-				var reg = /#\S{1,15}#/g;
-				var topics = text.match(reg);
-				if(topics && topics.length > 0){
-					saveTopic(topics, post.id);
-				}
-			},
-			error: function(post, error){
-				console.log('Failed to create new object, with error code: ' + error.description);
-			}
-		});		
-	});
-	
-	function saveTopic(topics, postId){		
-		    if(topics.length == 0){
-		    	return;
-		    }
-			// 取最后一个,并去除前后#号
-			var topicName = topics.pop().slice(1,-1);
-			var query = new AV.Query(Topic);
-			query.equalTo('name', topicName);
-			query.find().then(function(results){				
-				// topic已存在
-				if(results !== null && results.length > 0){
-					var topic = results[0];
-					topic.add('postId', postId);
-					topic.set('postNum', (topic.get('postNum') || 0) + 1);
-					return topic.save();
-				// topic不存在
-				}else{
-					var topic = new Topic();
-					topic.set('name', topicName);
-					topic.set('postId',[postId]);
-					topic.set('postNum', 1);
-					return topic.save(null,{success: function(topic){
-						
-						console.log('create new topic succeed: ' + topic.id);
-					}});
-				}
-			}).then(function(){
-				console.log("save topic succeed");
-				// 递归调用
-				return saveTopic(topics, postId)
-			},function(error){
-				console.log("save topic error");
-				console.log("Error: " + error.code + " " + error.message);
-			}).then(function(){
-				// 查询主题标签
-				var topicQuery = new AV.Query(Topic);
-				topicQuery.descending('postNum');
-				return topicQuery.find();
-			}).then(function(allTopics){
-				// 更新标签面板
-				$('#topicPanel').empty();
-				for(var i = 0; i<allTopics.length; i++){					
-					$('<span>' + allTopics[i].get('name') + '</span>').appendTo('#topicPanel');
-				}
-			},function(error){
-				console.log("query all topic error");
-				console.log("Error: " + error.code + " " + error.message);
-			});
-	}
-	
-	
-	
-});// end of ready
 </script>
-
 </head>
-<body> 
+
+<body>
   <div class="wrapper">
     <div class="dashboard-left">
-    
-        <div class="panel panel-default" id="me">
-          <div><img src="resources/img/t1.jpg" ></div>
-        </div>
-        
-        <div class="panel panel-default" id="about"> 
-            <span>发现美</span><span>·</span><span>表达美</span>
-        </div>
-         
-         <div class="panel panel-default" id="topicPanel"></div>      
-         
+
+      <div class="face-img">
+        <img src="resources/img/t1.jpg">
+      </div>
+
+      <div class="face-text">
+        <span>发现美</span>
+        <span>·</span>
+        <span>表达美</span>
+      </div>
+
+      <div id="tagPanel"></div>
+      <!-- 模板 -->
+      <span id="tagTempl" class="tag"></span>
+
     </div>
     <div class="content-main">
-      <div class="panel panel-default" >
-          <div class="cc-item" id="newCcItem" >
-               <div class="cc-box" id="newCcBox" style="border:0px" contentEditable=true>
-                  <div id="newCcPlaceholder">有什么想法？</div>
-               </div>               
-               
-               <div id="ccBoxFooter" style="display:none">
-                  <button type="button" class="btn btn-default" style="border:0px">拍照</button>
-                  <button type="button" class="btn btn-default" style="border:0px">链接</button>
-                  <button type="button" class="btn btn-default" style="border:0px">位置</button>
-                  <button id="sendCcBtn" disabled type="button" class="btn btn-success" style="float:right;margin-right:18px">&nbsp;保&nbsp;存&nbsp;</button>
-               </div>
-            </div>     
-            <div id="ccItemList"></div>         
-        </div>    
+      <div id="newPostItem" class="post-item">
+        <div id="newPostPlaceholder" class="box">有什么想法？</div>
+        <div id="newPostBox" class="box" contentEditable=true spellcheck="false"></div>
+
+        <div id="toolBar">
+          <!-- <button type="button" class="btn btn-default" style="border:0px">拍照</button>
+                  <button type="button" class="btn btn-default" style="border:0px">位置</button> -->
+          <button id="createPostBtn" disabled type="button" class="btn btn-success">&nbsp;保&nbsp;存&nbsp;</button>
+        </div>
+      </div>
+
+      <div id="postList"></div>
+      <!-- 模板 -->
+      <div class="post-item" id="postItemTempl">
+        <div class="box"></div>
+        <div class="footer"></div>
+      </div>
     </div>
-    
+
   </div>
 </body>
 </html>

@@ -1,0 +1,165 @@
+@CHARSET "UTF-8";
+
+body {
+  overflow-y: scroll;
+  font-family: 'Hiragino Sans GB', 'Microsoft YaHei', 微软雅黑, tahoma, arial,
+    simsun, 宋体;
+  padding-top: 58px;
+  background-image: url(resources/img/bg1.png);
+  background-color: #3D3D3D;
+}
+
+@media ( max-width : 992px) {
+  .wrapper {
+    width: 610px;
+  }
+  .dashboard-left {
+    display: none;
+  }
+}
+
+.wrapper {
+  width: 890px;
+  position: relative;
+  margin: 0 auto;
+}
+
+.dashboard-left {
+  float: left;
+  width: 280px;
+}
+
+.content-main {
+  float: left;
+  width: 590px;
+  margin: 0px 0px 0px 20px;
+}
+
+.face-img img {
+  max-width: 280px;
+  /*max-height:169px*/
+}
+
+.face-text {
+  border-radius: 0px;
+  border: 0px;
+  border-bottom: 1px solid gray;
+  background-color: transparent;
+  color: gray;
+  padding-left: 35px;
+  padding-bottom: 5px;
+  font-size: 26px;
+}
+
+.face-text span {
+  padding-right: 8px;
+}
+
+#tagPanel {
+  min-height: 100px;
+  padding-left: 0px;
+  margin-top: 50px;
+  background-color: #474747;
+  border: 0px;
+  border-radius: 4px;
+}
+
+#tagTempl {
+  display: none;
+}
+
+#tagPanel .tag {
+  color: white;
+  margin-right: 15px;
+  margin-left: 5px;
+  margin-top: 5px;
+  display: inline-block;
+  line-height: 25px;
+  padding: 0 10px;
+}
+
+#tagPanel .tag:hover {
+  cursor: pointer;
+  background-color: #B7B7B7;
+  color: white;
+}
+
+#newPostItem {
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+}
+
+.top-radius {
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+}
+
+.bottom-radius {
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+
+#newPostPlaceholder {
+  cursor: pointer;
+}
+
+#newPostBox {
+  outline: 0;
+  display: none;
+  min-height: 100px;
+}
+
+.box {
+  margin: 0px 0px 10px 0px;
+  font-size: 14px;
+  padding: 8px 0px;
+  min-height: 32px;
+}
+
+#toolBar {
+  border-top: 1px solid #efeeee;
+  padding-top: 10px;
+  display: none;
+}
+
+#createPostBtn {
+  float: right;
+  margin-right: 18px
+}
+
+#toolBar:after {
+  clear: both;
+  display: block;
+  visibility: hidden;
+  height: 0;
+  overflow: hidden;
+  content: '.';
+}
+
+#postList {
+  margin-bottom: 50px;
+}
+
+.last-post {
+  border-bottom-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+}
+
+.post-item {
+  background-color: white;
+  border-bottom: 1px solid #e1e8ed;
+  padding-top: 8px;
+  padding-left: 30px;
+  padding-right: 10px;
+  padding-bottom: 20px;
+  -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+}
+
+#postItemTempl {
+  display: none;
+}
+
+.footer {
+  
+}
