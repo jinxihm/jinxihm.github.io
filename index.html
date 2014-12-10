@@ -37,7 +37,7 @@
 			$(this).css('display', 'none');
 			$('#newPostBox').css('display', 'block').focus();
 			$('#toolBar').css('display', 'block');
-			$('#newPostItem').css('margin-bottom', '15px').addClass('bottom-radius');
+			$('#newPostItem').css('margin-bottom', '15px').removeClass('top-radius');
 			$('#newPostItem').css('box-shadow', '1px 1px 40px rgba(0, 109, 109, 1)');
 			$('.first-post').addClass('top-radius');
 			$('#postList .post-item').css('opacity', '0.1');
@@ -50,7 +50,7 @@
 				$(this).css('display', 'none');
 				$('#toolBar').css('display', 'none');
 				$('#newPostPlaceholder').css('display', 'block');
-				$('#newPostItem').css('margin-bottom', '0px').removeClass('bottom-radius');
+				$('#newPostItem').css('margin-bottom', '0px').addClass('top-radius');
 				$('#newPostItem').css('box-shadow', 'none');
 				$('.first-post').css('border-top-left-radius', '0px').removeClass('top-radius');
 				$('#postList .post-item').css('opacity', '1');
@@ -96,7 +96,7 @@
 
     </div>
     <div class="content-main">
-      <div id="newPostItem" class="post-item">
+      <div id="newPostItem" class="post-item top-radius">
         <div id="newPostPlaceholder" class="box">有什么想法？</div>
         <div id="newPostBox" class="box" contentEditable=true spellcheck="false"></div>
         <div id="toolBar">
