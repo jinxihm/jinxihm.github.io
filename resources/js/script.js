@@ -35,8 +35,10 @@ function loadTag() {
 	});
 };
 
+// 添加文章到页面
 function appendPosts(posts) {
 	$('#postList').empty();
+	$('#newPostItem').css('display','block');
 	if (!posts || posts.length == 0) {
 		$('#newPostItem').addClass('bottom-radius');
 		return;
@@ -55,8 +57,8 @@ function appendPosts(posts) {
 	}
 }
 
-// 加载文章
-function loadPost(from, size) {
+// 查询文章
+function queryPost(from, size) {
 	var query = new AV.Query(Post);
 	query.descending('createdTime');
 	if (from !== null) {

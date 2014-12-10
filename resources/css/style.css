@@ -18,7 +18,7 @@ body {
 .dashboard-left {
   float: left;
   width: 280px;
-  margin-right:20px;
+  margin-right: 20px;
 }
 
 .content-main {
@@ -27,11 +27,10 @@ body {
   margin: 0;
 }
 
-.dashboard-right{
+.dashboard-right {
   float: left;
-  display:none;
+  display: none;
 }
-
 
 @media ( max-width : 992px) {
   .wrapper {
@@ -42,12 +41,12 @@ body {
   }
 }
 
-@media ( max-width : 600px){
-  .wrapper{
-  width:100%;
+@media ( max-width : 600px) {
+  .wrapper {
+    width: 100%;
   }
   .content-main {
-  width:100%;
+    width: 100%;
   }
 }
 
@@ -57,7 +56,7 @@ body {
   }
   .dashboard-right {
     display: block;
-    width:110px;
+    width: 110px;
   }
 }
 
@@ -67,13 +66,14 @@ body {
   }
   .dashboard-right {
     display: block;
-    width:210px;
+    width: 210px;
   }
 }
 
-.face-img{
+.face-img {
   margin-bottom: 20px;
 }
+
 .face-img img {
   max-width: 280px;
   /*max-height:169px*/
@@ -124,6 +124,7 @@ body {
 }
 
 #newPostItem {
+  display: none;
 }
 
 .top-radius {
@@ -201,7 +202,8 @@ body {
 }
 
 .post-foot {
- /*  min-height:50px;
+  /*  min-height:50px;
   background-color:gray;
   margin-left:-30px; */
+  
 }
