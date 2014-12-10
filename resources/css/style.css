@@ -9,15 +9,6 @@ body {
   background-color: #3D3D3D;
 }
 
-@media ( max-width : 992px) {
-  .wrapper {
-    width: 610px;
-  }
-  .dashboard-left {
-    display: none;
-  }
-}
-
 .wrapper {
   width: 890px;
   position: relative;
@@ -27,12 +18,58 @@ body {
 .dashboard-left {
   float: left;
   width: 280px;
+  margin-right:20px;
 }
 
 .content-main {
   float: left;
   width: 590px;
-  margin: 0px 0px 0px 20px;
+  margin: 0;
+}
+
+.dashboard-right{
+  float: left;
+  border-top:10px solid white;
+  display:none;
+}
+
+
+@media ( max-width : 992px) {
+  .wrapper {
+    width: 590px;
+  }
+  .dashboard-left {
+    display: none;
+  }
+}
+
+@media ( max-width : 600px){
+  .wrapper{
+  width:100%;
+  }
+  .content-main {
+  width:100%;
+  }
+}
+
+@media ( min-width : 1036px) {
+  .wrapper {
+    width: 1000px;
+  }
+  .dashboard-right {
+    display: block;
+    width:110px;
+  }
+}
+
+@media ( min-width : 1290px) {
+  .wrapper {
+    width: 1100px;
+  }
+  .dashboard-right {
+    display: block;
+    width:210px;
+  }
 }
 
 .face-img{
