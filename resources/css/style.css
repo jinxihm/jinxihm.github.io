@@ -35,6 +35,9 @@ body {
   margin: 0px 0px 0px 20px;
 }
 
+.face-img{
+  margin-bottom: 20px;
+}
 .face-img img {
   max-width: 280px;
   /*max-height:169px*/
@@ -49,6 +52,7 @@ body {
   padding-left: 35px;
   padding-bottom: 5px;
   font-size: 26px;
+  margin-bottom: 50px;
 }
 
 .face-text span {
@@ -58,7 +62,6 @@ body {
 #tagPanel {
   min-height: 100px;
   padding-left: 0px;
-  margin-top: 50px;
   background-color: #474747;
   border: 0px;
   border-radius: 4px;
@@ -163,6 +166,8 @@ body {
   display: none;
 }
 
-.footer {
-  
+.post-foot {
+ /*  min-height:50px;
+  background-color:gray;
+  margin-left:-30px; */
 }
