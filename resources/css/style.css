@@ -101,6 +101,9 @@ body {
 
 #newPostPlaceholder {
   cursor: pointer;
+  font-style: italic;
+  letter-spacing: 2px;
+  color: #999;
 }
 
 #newPostBox {
