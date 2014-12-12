@@ -53,7 +53,7 @@ function appendPosts(posts) {
 		if (i == posts.length - 1) {// 最后一篇post,有可能也是第一个post.
 			postElm.addClass('last-post');
 		}
-		postElm.find('.box').html(posts[i].get('html'));
+		postElm.find('.box').html(posts[i].get('html')).data('postId',posts[i].id);
 	}
 }
 
@@ -80,7 +80,7 @@ function queryPost(from, size) {
 // 查找标签下的全部文章
 function loadPostOfTag(tagName) {
 	if (tagName === '全部') {
-		loadPost();
+		queryPost();
 		return;
 	}
 	var tagQry = new AV.Query(Tag);
@@ -91,7 +91,7 @@ function loadPostOfTag(tagName) {
 		}
 		var postIdsArr = object.get('postId');
 		var postIdsStr = postIdsArr.join('","');
-		var cql = 'select html from Post where objectId in ( "' + postIdsStr + '" ) order by createdTime desc';
+		var cql = 'select html,id from Post where objectId in ( "' + postIdsStr + '" ) order by createdTime desc';
 		AV.Query.doCloudQuery(cql, {
 			success : function(result) {
 				appendPosts(result.results);
@@ -176,4 +176,17 @@ function saveTags(tags, postId) {
 	}, function(error) {
 		logError('query tags ', error);
 	});
+}
+
+function createComment(text,html, postId){
+	var comment = new Comment();
+	comment.set('text',text);
+	comment.set('html',html);
+	comment.set('postId',postId);
+	comment.set('createdTime', (new Date()).getTime());
+	comment.save(null, {success:function(comment){
+		console.log('save comment succeed.' + comment.id);
+	},error:function(comment, error){
+		logError('save comment error ', error);
+	}});
 }
