@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="description" content="my place">
+<meta name="author" content="fangliang">
+<title>无魂</title>
+
+<link href="resources/bootstrap331dist/css/bootstrap.css" rel="stylesheet">
+<link href="resources/font-awesome-420/css/font-awesome.min.css" rel="stylesheet">
+<link href="style2-1.css" rel="stylesheet">
+
+<script src="resources/jquery/jquery-1.11.1.min.js"></script>
+<script src="resources/bootstrap331dist/js/bootstrap.min.js"></script>
+<script src="resources/avos/av-mini.js"></script>
+<script src="script2.js"></script>
+<script>
+	$(document).ready(function() {
+		AV.initialize(appId, appKey);
+		// 加载全部标签
+		loadTag();
+		// 加载前20篇文章
+		queryPost(0, 20);
+		// 注册事件
+		registEvent();
+	});
+</script>
+</head>
+
+<body>
+  <div class="wrapper">
+
+    <div class="dashboard-left">
+      <div class="face-img">
+        <img src="resources/img/t1.jpg">
+      </div>
+      <div class="face-text">
+        <span>发现美</span><span>·</span><span>表达美</span>
+      </div>
+      <div id="tagPanel"></div>
+    </div>
+
+    <div class="content-main">
+
+      <div id="newPostItem" class="post-item top-radius list item">
+        <div id="newPostPlaceholder" class="box">有什么想法？</div>
+        <div class="box-container">
+          <div id="newPostBox" class="box post-box" contentEditable=true spellcheck="false"></div>
+        </div>
+        <div id="toolBar">
+          <button id="createPostBtn" disabled type="button" class="btn btn-success">&nbsp;保&nbsp;存&nbsp;</button>
+        </div>
+      </div>
+
+      <div id="postList"></div>
+    </div>
+    <div class="dashboard-right"></div>
+  </div>
+
+  <!-- 标签模板 -->
+  <div id="templates" style="display:none">
+
+    <span id="tagTempl" class="tag"></span>
+
+    <div id="postItemTempl" class="post-item">
+      <div class="box"></div>
+      <div class="info hide">
+        <div class="opt">
+          <span>...</span>
+          <span>评论</span>
+          <span>编辑</span>
+          <span>删除</span>
+          <span>2014-12-07</span>
+        </div>
+        <div class="comment-list">
+          <div class="sort-asc">
+            <i class="fa fa-sort-asc comment-arrow"></i>
+          </div>
+          <div id="newCommentItem">
+            <div class="comment-box new-comment-placeholder">
+              <i class="fa fa-comment-o ">...</i>
+            </div>
+            <div class="comment-box new-comment-box" contentEditable=true spellcheck="false"></div>
+            <div class="comment-tool-bar">
+              <button class="create-comment-btn btn btn-success" disabled type="button">&nbsp;保&nbsp;存&nbsp;</button>
+            </div>
+          </div>
+          <div class="comment-box" contentEditable=true spellcheck="false">啊啊啊啊啊啊</div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+  </div>
+  <!-- end templates -->
+
+
+</body>
+</html>
