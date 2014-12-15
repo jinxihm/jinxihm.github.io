@@ -41,11 +41,11 @@
     <div class="main-content">
       <div id="newPostItem">
         <div class="placeholder bg-white top-radius">有什么想法？</div>
-        <div id="newPostBoxContainer">
-          <div class="post-box bg-white hide" contentEditable=true spellcheck="false"></div>
+        <div id="newPostBoxContainer" class="box-container hide">
+          <div class="post-box bg-white padding15" contentEditable=true spellcheck="false"></div>
         </div>
         <div class="toolbar bg-white hide">
-          <button class="btn btn-success create-post-btn" id="createPostBtn" disabled type="button">保存</button>
+          <button class="btn btn-success create-post-btn" id="createPostBtn" disabled type="button" title="Ctrl Enter">保存</button>
         </div>
       </div>
       <div id="postList">
@@ -64,10 +64,10 @@
 
     <div id="postItemTempl" class="post-item">
       <div class="post-box-container"></div>
-      <div class="post-info">
-        <span class="more">···</span>
+      <div class="post-info bg-white">
+        <span class="more" title="更多">···</span>
         <span class="comment">评论</span>
-        <span class="edit hide">编辑</span>
+        <span class="edit hide" title="not finished yet.">编辑</span>
         <span class="delete hide">删除</span>
         <span class="createdDate">2014-12-07</span>
       </div>
@@ -77,10 +77,10 @@
         <div class="new-comment-item">
           <div class="placeholder"><i class="fa fa-comment-o ">...</i></div>
           <div class="comment-box-container hide">
-            <div class="comment-box" contentEditable=true spellcheck="false"></div>
+            <div class="comment-box padding15" contentEditable=true spellcheck="false"></div>
           </div>
           <div class="toolbar hide">
-            <button class="create-comment-btn btn btn-success" disabled type="button">保存</button>
+            <button class="create-comment-btn btn btn-success" disabled type="button" title="Ctrl Enter">保存</button>
           </div>
         </div>
       </div>

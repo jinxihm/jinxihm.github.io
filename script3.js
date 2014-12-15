@@ -4,13 +4,12 @@ var Comment = AV.Object.extend('Comment');
 
 function logErr(msg, error) {
 	if (console && console.error) {
-		console.error(msg + ": Error code: " + error.code + " . Error message: " + error.message);
+		console.error(msg + " . Error code: " + error.code + " . Error message: " + error.message);
 	}
 }
 
 // 加载标签
 function loadTag() {
-
 	$('#tagPanel').empty();
 	var tagElmTmpl = $('#tagTempl').clone().removeAttr('id');
 	var qry = new AV.Query(Tag);
@@ -19,40 +18,19 @@ function loadTag() {
 		// 更新标签面板
 		for (var i = 0; i < tags.length; i++) {
 			var tagName = tags[i].get('name');
-			var tagElm = $('#tagTempl').clone().removeAttr('id').text(tagName).appendTo('#tagPanel');
-			if (tagName === '未分类') {
-				tagElm.attr('id', 'notCatgTag');
-			}
+			if (tagName !== '未分类' && tagName !== '全部') {
+				showTag(tagName);
+			}			
 		}
-		if ($('#notCatgTag').length > 0) {
-			$('#notCatgTag').remove();
-			var tagElm = $('#tagTempl').clone().removeAttr('id').text('未分类').appendTo('#tagPanel');
-		}
-		$('#tagTempl').clone().removeAttr('id').text('全部').appendTo('#tagPanel');
+		showTag('未分类');
+		showTag('全部');
 	}, function(error) {
 		logErr('query tags error.', error);
 	});
 };
 
-// 添加到页面
-function showPosts(posts) {
-	$('#postList').empty();
-	$('#newPostItem').css('display', 'block');
-	if (!posts || posts.length == 0) {
-		$('#newPostItem').addClass('bottom-radius');
-		return;
-	} else {
-		$('#newPostItem').removeClass('bottom-radius');
-	}
-	for (var i = 0; i < posts.length; i++) {
-		var postElm = $('#postItemTempl').clone().removeAttr('id').data('postId', posts[i].id).appendTo('#postList').find('.post-box-container').html(posts[i].get('html'));
-		if (i == 0) {// 标记第一个post
-			postElm.addClass('first-item');
-		}
-		if (i == posts.length - 1) {// 最后一篇post,有可能也是第一个post.
-			postElm.addClass('last-post');
-		}
-	}
+function showTag(tag){
+	$('#tagTempl').clone().removeAttr('id').text(tag).appendTo('#tagPanel');
 }
 
 // 查询文章
@@ -65,14 +43,32 @@ function queryPost(from, size) {
 	if (size !== null) {
 		query.limit(size);
 	}
-	query.find({
-		success : function(posts) {
-			showPosts(posts);
-		},
-		error : function(error) {
-			logErr('query posts error.', error);
-		}
+	query.find().then(function(posts){
+		showPosts(posts);
+	},function(error){
+		logErr('query posts error.', error);
 	});
+}
+
+//添加到页面
+function showPosts(posts) {
+	$('#postList').empty();
+	if (!posts || posts.length == 0) {
+		$('#newPostItem').addClass('bottom-radius');
+		return;
+	} else {
+		$('#newPostItem').removeClass('bottom-radius');
+	}
+	for (var i = 0; i < posts.length; i++) {
+		var postElm = $('#postItemTempl').clone().removeAttr('id').data('postId', posts[i].id).appendTo('#postList');
+		postElm.find('.post-box-container').html(posts[i].get('html'));
+		if (i == 0) {// 标记第一个post
+			postElm.addClass('first-post-item');
+		}
+		if (i == posts.length - 1) {// 最后一篇post,有可能也是第一个post.
+			postElm.addClass('last-post-item');
+		}
+	}
 }
 
 // 查找标签下的全部文章
@@ -110,27 +106,31 @@ function savePost(text, html) {
 	post.set('createdTime', (new Date()).getTime());
 	post.save(null, {
 		success : function(post) {
-			$('#createPostBtn').text('保存');
-			$('#newPostItem .post-box').html('').blur().addClass('hide');
-			$('#newPostItem .toolbar').addClass('hide');
-			$('#newPostItem .placeholder').removeClass('hide');
-			$('#postList .post-item').removeClass('opacity01');
-			$('.first-post').removeClass('first-post');
-			var itemTemp = $('#postItemTempl').clone().removeAttr('id').addClass('first-post').prependTo('#postList');
-			itemTemp.find('.post-box-container').html(html);
-
-			// 匹配标签,双#号之间1到15个非空白字符
-			var reg = /#\S{1,15}#/g;
-			var tags = text.match(reg);
-			if (!tags || tags.length == 0) {
-				tags = [ '#未分类#' ];
-			}
-			saveTags(tags, post.id);
+			savePostSucceedFn(post, text, html);
 		},
 		error : function(post, error) {
 			logErr('save post failed.', error);
 		}
 	});
+}
+
+function savePostSucceedFn(post, text, html){
+	$('#createPostBtn').text('保存');
+	$('#newPostItem .post-box').html('').removeClass('write-post-box-shadow').blur();
+	$('#newPostItem .box-container').addClass('hide');
+	$('#newPostItem .toolbar').addClass('hide');
+	$('#newPostItem .placeholder').removeClass('hide');
+	$('#postList .post-item').removeClass('opacity01');
+	$('#postItemTempl').clone().removeAttr('id').prependTo('#postList')
+	.find('.post-box-container').html(html);
+
+	// 匹配标签,双#号之间1到15个非空白字符
+	var reg = /#\S{1,15}#/g;
+	var tags = text.match(reg);
+	if (!tags || tags.length == 0) {
+		tags = [ '#未分类#' ];
+	}
+	saveTags(tags, post.id);
 }
 
 function saveTags(tags, postId) {
@@ -143,7 +143,6 @@ function saveTags(tags, postId) {
 	while ((tagName = tags.pop().slice(1, -1)) == '全部') {
 		continue;
 	}
-	// var tagName = tags.pop().slice(1, -1);
 	var query = new AV.Query(Tag);
 	query.equalTo('name', tagName);
 	query.find().then(function(results) {
@@ -172,6 +171,7 @@ function saveTags(tags, postId) {
 	}, function(error) {
 		logErr('save tag error. ', error);
 	}).then(function() {
+		// 重新加载标签
 		return loadTag();
 	}).then(function() {
 		console.log('query tags succeed');
@@ -186,13 +186,10 @@ function createComment(text, html, postId, succeedFn) {
 	comment.set('html', html);
 	comment.set('postId', postId);
 	comment.set('createdTime', (new Date()).getTime());
-	comment.save(null, {
-		success : function(comment) {
-			succeedFn(comment.id);
-		},
-		error : function(comment, error) {
-			logErr('save comment error ', error);
-		}
+	comment.save(null).then(function(comment){
+		succeedFn(comment.id);
+	},function(comment, error){
+		logErr('save comment error ', error);
 	});
 }
 
@@ -206,25 +203,25 @@ function queryComment(postId, succeedFn, failedFn) {
 	})
 }
 
+function isBoxEmpty(box) {
+	var text = $(box).text();
+	var html = $(box).html();
+	if (text.trim() === "" && html.indexOf('<img') < 0 && html.indexOf('<audio') < 0 && html.indexOf('<video') < 0) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+function getPostId(elm) {
+	return $(elm).closest('.post-item').data('postId');
+}
+
+function getCommentList(elm){
+	return $(elm).closest('.post-item').find('.comment-list');
+}
+
 function registEvent() {
-
-	function isBoxEmpty(box) {
-		var text = $(box).text();
-		var html = $(box).html();
-		if (text.trim() === "" && html.indexOf('<img') < 0 && html.indexOf('<audio') < 0 && html.indexOf('<video') < 0) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	function getPostId(elm) {
-		return $(elm).closest('.post-item').data('postId');
-	}
-	
-	function getCommentList(elm){
-		return $(elm).closest('.post-item').find('.comment-list');
-	}
 
 	$('#tagPanel').on({
 		click : function() {
@@ -232,23 +229,20 @@ function registEvent() {
 		}
 	}, ".tag");
 
-	$('#newPostItem .placeholder').click(function() {
+	$('#newPostItem .placeholder').click(function() {			
 		$(this).addClass('hide');
-		$('#newPostItem .post-box').removeClass('hide').attr('contentEditable', 'true').focus();
+		$('#newPostItem .box-container').removeClass('hide')
+		$('#newPostItem .post-box').attr('contentEditable', 'true').focus().addClass('write-post-box-shadow');
 		$('#newPostItem .toolbar').removeClass('hide');
-		$('#newPostItem').removeClass('top-radius').addClass('write-post-box-shadow');
-
-		$('.first-post').addClass('top-radius');
 		$('#postList .post-item').addClass('opacity01');
 	});
 
 	$('#newPostItem .post-box').blur(function() {
 		if (isBoxEmpty(this)) {
-			$(this).addClass('hide');
+			$(this).parent().addClass('hide');
 			$('#newPostItem .toolbar').addClass('hide');
 			$('#newPostItem .placeholder').removeClass('hide');
-			$('#newPostItem').addClass('top-radius').removeClass('write-post-box-shadow');
-			$('.first-post').removeClass('top-radius');
+			$('#newPostItem .post-box').addClass('top-radius').removeClass('write-post-box-shadow');
 			$('#postList .post-item').removeClass('opacity01');
 		}
 	}).keyup(function(e) {
@@ -264,7 +258,7 @@ function registEvent() {
 
 	$('#createPostBtn').click(function() {
 		$(this).text('正在保存');
-		$('#newPostItem .post-box').attr('contentEditable', 'false');
+		$('#newPostItem .post-box').attr('contentEditable', 'false').removeClass('write-post-box-shadow').removeClass('top-radius');
 		savePost($('#newPostBoxContainer').text(), $('#newPostBoxContainer').html());
 	});
 
