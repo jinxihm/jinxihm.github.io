@@ -293,7 +293,7 @@ function registEvent() {
 	
 	$('#postList').on({
 		click: function(){
-			$(this).next().next().toggleClass('hide');
+			$(this).next().next().toggleClass('hide').next().toggleClass('hide');
 		}
 	}, 'span.more');
 
