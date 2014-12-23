@@ -180,6 +180,19 @@ function saveTags(tags, postId) {
 	});
 }
 
+function deletePost(postId, succeedFn){
+	var qry = new AV.Query(Post);
+	qry.get(postId).then(function(post){
+		return post.destroy();
+	}, function(object, error){
+		logErr('query post failed');
+	}).then(function(post){
+		succeedFn();
+	}, function(object, error){
+		logErr('delete post failed')
+	})
+}
+
 function createComment(text, html, postId, succeedFn) {
 	var comment = new Comment();
 	comment.set('text', text);
@@ -284,6 +297,18 @@ function registEvent() {
 			});
 		}
 	}, 'span.comment');
+	
+	$('#postList').on({
+		click:function(){
+			
+			var _this = this;
+			if(confirm('您确定要删除吗')){
+				deletePost(getPostId(this), function(){
+					$(_this).closest('.post-item').remove();
+				})
+			}
+		}
+	}, 'span.delete')
 	
 	$('#postList').on({
 		click: function(){
